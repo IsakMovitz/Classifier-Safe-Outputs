@@ -2,12 +2,15 @@ import pandas as pd
 import numpy as np
 import csv
 
-df = pd.read_csv('cities.csv')
-a = np.zeros(5)
+# Importing and using the pretrained BERT model from hugginface # 
 
-print("Hello")
-print(a)
-print(df.to_string())
+
+# Fine-tuning it on swedish data # 
+
+
+
+
+
 
 
 
