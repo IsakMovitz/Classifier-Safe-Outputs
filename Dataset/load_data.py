@@ -30,6 +30,9 @@ from datasets import load_dataset
 # huggingface-cli login 
 dataset = load_dataset('oscar-corpus/OSCAR-2109', "deduplicated_sv", split='train', streaming=True, use_auth_token=True)
 
-print("#########################")
-print(next(iter(dataset)))
-print("#######################")
+
+
+for i in range(2):
+    print("#########################")
+    print(next(iter(dataset)))
+    print("#######################")
