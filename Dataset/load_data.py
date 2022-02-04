@@ -30,9 +30,33 @@ from datasets import load_dataset
 # huggingface-cli login 
 dataset = load_dataset('oscar-corpus/OSCAR-2109', "deduplicated_sv", split='train', streaming=True, use_auth_token=True)
 
+# Object
+# 'id'
+# 'text'
+# 'meta'
+
+dataset_iterator = iter(dataset)
+
+#for i in range(1):      # 2, Get the first two objects of the dataset streamed 
+print("#########################")
+
+dataobject = next(dataset_iterator)
+#dataobject = next(dataset_iterator)
+object_id = dataobject['id']
+text = dataobject['text']       # string type
+
+sentence_list = text.split('.')
 
 
-for i in range(2):
-    print("#########################")
-    print(next(iter(dataset)))
-    print("#######################")
+print(sentence_list[0])
+print(sentence_list[1])
+
+#print(len(sentence_list))
+
+
+# print(object_id)
+# print(text) 
+
+
+
+print("#######################")
