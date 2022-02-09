@@ -1,0 +1,23 @@
+* Open File Explorer.
+  Type \\wsl$ in the address bar.
+  My distro shows up and click on it and you can see the file system.
+
+* Make sure to have an elastic search image going on docker.
+
+docker run -d \
+ --name elasticsearch-for-rubrix \
+ -p 9200:9200 -p 9300:9300 \
+ -e "ES_JAVA_OPTS=-Xms512m -Xmx512m" \
+ -e "discovery.type=single-node" \
+ docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
+
+* click run on the elasticsearch-for-rubix on the desktop app
+
+Check that it's running with:
+
+docker ps
+
+
+* Follow the github guide on rubrix repo.
+
+python3 -m rubrix
