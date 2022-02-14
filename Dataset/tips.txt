@@ -1,8 +1,18 @@
-* Open File Explorer.
-  Type \\wsl$ in the address bar.
-  My distro shows up and click on it and you can see the file system.
 
-* Make sure to have an elastic search image going on docker.
+* Issues
+  - Issues downloading datasets from hugginface when using WSL2 on certain networks (eduroam for example)
+  - Issue might be with loading cached data saved on WSL2. Maybe not an issue just slow loading time
+    and no feedback?
+  - Make sure to add "use_auth_token=True" parameter when accessing community dataset
+
+* Distro for cached datasets
+
+  \\wsl.localhost\Ubuntu\home\isakmovitz\.cache
+
+
+### RUBRIX ###
+
+* Make sure to have an elastic search image going on docker for using rubrix.
 
 docker run -d \
  --name elasticsearch-for-rubrix \
@@ -11,12 +21,11 @@ docker run -d \
  -e "discovery.type=single-node" \
  docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
 
-* click run on the elasticsearch-for-rubix on the desktop app
+* click run on the elasticsearch-for-rubix on the docker desktop app
 
 Check that it's running with:
 
 docker ps
-
 
 * Follow the github guide on rubrix repo.
 
