@@ -21,12 +21,19 @@ docker run -d \
  -e "discovery.type=single-node" \
  docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
 
-* click run on the elasticsearch-for-rubix on the docker desktop app
+* click run on the elasticsearch-for-rubix on the docker desktop app ##
 
 Check that it's running with:
 
-docker ps
+  docker ps
 
-* Follow the github guide on rubrix repo.
+Follow the github guide on rubrix repo.
 
-python3 -m rubrix
+  python3 -m rubrix
+
+## DATA ANNOTATION ## 
+
+* Start by labelling the instances where the pretrained model has a close score between 
+ Positive and Negative, one by one.
+
+* Instances with a high Negative or Positive score can more easily be bulk annotated.
