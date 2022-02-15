@@ -4,6 +4,7 @@
   - Issue might be with loading cached data saved on WSL2. Maybe not an issue just slow loading time
     and no feedback?
   - Make sure to add "use_auth_token=True" parameter when accessing community dataset
+  - Issues with gitignore not ignoring large saved models. 
 
 * Distro for cached datasets
 
