@@ -58,9 +58,6 @@ for i in range(5):
     starting_index = random.randrange(0,length - span_length)
     random_sample_list = instance_text_list[starting_index:starting_index + span_length]
 
-    # This format
-    # ['Skäggetorp', 'centrum', '14,', 'i', 'Linköping','är', 'en',
-    # 'av', 'dem.', 'Projektet', 'har', 'genomförts', 'av', 'gatukonstorganisationen', 'Artscape.\nNu']
     print(random_sample_list)
 
     # Back to string
