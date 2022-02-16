@@ -10,8 +10,16 @@
 
   \\wsl.localhost\Ubuntu\home\isakmovitz\.cache
 
+### PRODIGY ###
+
+Prodigy is using click 8.0.3 and is not compatible with the same click as Rubrix needs
+
+click version might be the problem, 
+
 
 ### RUBRIX ###
+ERROR: uvicorn 0.13.4 has requirement click==7.*, but you'll have click 8.0.3 which is incompatible.
+might have to change this back for rubrix to work ? Might not be an issue.
 
 * Make sure to have an elastic search image going on docker for using rubrix.
 

@@ -7,8 +7,8 @@ python -m rubrix
 ### Write to rubrix ###
 
 rb.log(
-  rb.TextClassificationRecord(inputs="hejhej"), 
-  name='new_testing'
+  rb.TextClassificationRecord(inputs="nyyy"), 
+  name='testagain'
 )
 
 ### Read from rubrix ###
