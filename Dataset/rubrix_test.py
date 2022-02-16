@@ -15,4 +15,4 @@ rb.log(
 
 rb_df = rb.load(name='new_testing')       # Pandas dataframe , query="status:Validated", query="status:Default"
 
-print(rb_df)
+print(rb_df['inputs'])

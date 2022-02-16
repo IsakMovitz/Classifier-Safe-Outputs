@@ -25,7 +25,7 @@ test_df = pd.read_csv ("data/active_learning/test.csv")
 
 
 # ---- 2. Defining our classifier and Active Learner ---- #
-classifier = MultinomialNB()
+classifier = MultinomialNB()        # Regression model
 
 learner = ActiveLearner(
     estimator=classifier,

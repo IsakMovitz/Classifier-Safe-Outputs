@@ -18,12 +18,11 @@ be used (download_config, download_mode)'''
 
 
 ### Download the whole dataset ###
-#oscar_dataset = load_dataset('oscar-corpus/OSCAR-2109', 'deduplicated_sv', use_auth_token=True)
+oscar_dataset = load_dataset('oscar-corpus/OSCAR-2109', 'deduplicated_sv', use_auth_token=True)
 
-#train = oscar_dataset["train"]
-#test = oscar_dataset["test"]
-#print(train[0])
+train = oscar_dataset["train"] # Only train data
 
+print(train[0])
 
 ### Streaming over the dataset so you dont have to download the whole thing ###
 '''first parameter: dataset
@@ -38,15 +37,15 @@ Dataset Object
 'meta'
 
 '''
-dataset = load_dataset('oscar-corpus/OSCAR-2109', "deduplicated_sv", split='train', streaming=True, use_auth_token=True)
-dataset_iterator = iter(dataset)
+# dataset = load_dataset('oscar-corpus/OSCAR-2109', "deduplicated_sv", split='train', streaming=True, use_auth_token=True)
+# dataset_iterator = iter(dataset)
 
-#for i in range(1):      # Get the n first objects of the dataset streamed 
-dataobject = next(dataset_iterator)
-object_id = dataobject['id']
-text = dataobject['text']       # string type
+# #for i in range(1):      # Get the n first objects of the dataset streamed 
+# dataobject = next(dataset_iterator)
+# object_id = dataobject['id']
+# text = dataobject['text']       # string type
 
-sentence_list = text.split('.')
+# sentence_list = text.split('.')
 
-print(sentence_list[0])
-print(sentence_list[1])
+# print(sentence_list[0])
+# print(sentence_list[1])
