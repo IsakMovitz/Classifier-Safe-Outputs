@@ -1,8 +1,18 @@
 
 
-# Very similar problem to what you are doing here, with active learning as well.
-# https://prodi.gy/docs/text-classification
+''' 
+Very similar problem to what you are doing here, with active learning as well:
+    * https://prodi.gy/docs/text-classification
 
+
+* prodigy db-in: Import annotations to a dataset.
+* prodigy db-out: Export annotations from a dataset or session.
+* prodigy drop: Remove a dataset or session from the database.
+
+Problems:
+    * Many extra parameters in dataset saved from Prodigy. 
+      Swedish Letters also not represented correctly in jsonl view.
+'''
 
 # START ANNOTATION
 # python3 -m prodigy ner.manual ner_news_headlines blank:en ./data/news_headlines.jsonl --label PERSON,ORG,PRODUCT,LOCATION
@@ -24,22 +34,24 @@
 # Use with : python3 -m prodigy custom-recipe toxic_swe_dataset ./data.jsonl -F prodigy_test.py
 # Use with : python3 -m prodigy custom-recipe your_dataset ./data.jsonl -F recipe.py
 
-
-# CURRENT BEST METHOD
+''' CURRENT BEST METHOD '''
 
 # View all datasets created
 # python3 -m prodigy stats -l
-# Check how to delete as well
+# python3 -m prodigy stats -ls
+
+# Delete a dataset
+# python3 -mprodigy drop my_set
 
 # Loading data into Prodigy
 # python3 -m prodigy textcat.manual toxic_binary_15 ./data/raw_oscar_15.jsonl --label TOXIC,SAFE --exclusive
-# CURRENT = python3 -m prodigy textcat.manual toxic_binary ./data/raw_oscar_15.jsonl --label TOXIC
+# CURRENT = python3 -m prodigy textcat.manual toxic_binary_15 ./data/raw_oscar_15.jsonl --label TOXIC
 
 # Getting annotated results back from Prodigy to jsonl
 # python3 -m prodigy db-out toxic_swe_dataset > ./annotated_oscar_15.jsonl
 
-# python3 -m prodigy textcat.manual toxic_binary ./data/raw_oscar_15.jsonl --label TOXIC
+# python3 -m prodigy textcat.manual toxic_test ./data/raw_oscar_15.jsonl --label TOXIC
 
-# CURRENT = python3 -m prodigy db-out toxic_binary > ./annotated_oscar_15.jsonl
+# CURRENT = python3 -m prodigy db-out toxic_binary_15 > ./annotated_oscar_15.jsonl
 
 # Maybe make a script to turn Prodigy output into more clean jsonl? 
