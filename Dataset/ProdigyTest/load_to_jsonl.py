@@ -62,7 +62,11 @@ def parse_to_jsonl(data,span_length,filename,nr_samples):
                 f.write(json.dumps(item,ensure_ascii=False))
 
 
-parse_to_jsonl(training_data,15,"raw_oscar_100.jsonl",101)  # Since index 41 is < 15 in length
+#parse_to_jsonl(training_data,15,"raw_oscar_100.jsonl",101)  # Since index 41 is < 15 in length
 
+def print_from_jsonl(filename):
+    with open("data/" + filename) as f:
+        for line in f:
+            print(line)
 
-
+#print_from_jsonl("raw_oscar_100.jsonl")
