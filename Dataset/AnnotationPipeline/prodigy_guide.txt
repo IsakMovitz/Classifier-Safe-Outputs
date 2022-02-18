@@ -6,7 +6,7 @@
   - run the load_to_json.py script to save
   - saves data to .jsonl format
 
-## 2: View all datasets created, with our without sessions as well ##
+## View all datasets created, with our without sessions as well ##
 
   python3 -m prodigy stats -l
   python3 -m prodigy stats -ls
@@ -16,17 +16,17 @@
   python3 -m prodigy drop my_set
 
 
-## 3: Loading data into Prodigy for annotating ##
+## 2: Loading data into Prodigy for annotating ##
   python3 -m prodigy textcat.manual dataset_name ./path/to/jsonl_file --label LABEL1,LABEL2,LABEL3
 
   * Binary annotation 
   python3 -m prodigy textcat.manual toxic_binary ./data/raw_oscar.jsonl --label TOXIC
 
 
-## 4: Saving annotated data as jsonl file ##
+## 3: Saving annotated data as jsonl file ##
   python3 -m prodigy db-out toxic_binary > ./data/annotated_oscar.jsonl
 
-## 5: Clean the jsonl file into more compact format/ remove unnecessary data added by Prodigy ##
+## 4: Clean the jsonl file into more compact format/ remove unnecessary data added by Prodigy ##
 
   - run the clean_annotated script 
   - saves the data to a clean annotated .jsonl format
