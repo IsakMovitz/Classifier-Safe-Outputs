@@ -29,4 +29,4 @@ def clean_annotation(input_filename, output_filename):
                     f.write(json.dumps(item,ensure_ascii=False))
 
 
-clean_annotation()
+clean_annotation("oscar_50/annotated_oscar_50.jsonl","oscar_50/clean_annotated_oscar_50.jsonl")
