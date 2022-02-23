@@ -20,7 +20,7 @@
   python3 -m prodigy textcat.manual dataset_name ./path/to/jsonl_file --label LABEL1,LABEL2,LABEL3
 
   * Binary annotation 
-  python3 -m prodigy textcat.manual toxic_binary_50 ./data/oscar_50/raw_oscar_50.jsonl --label TOXIC
+  python3 -m prodigy textcat.manual toxic_binary_50 ./data/oscar_50/raw_oscar_50.jsonl --label TOXIC,RACIST
 
 
 ## 3: Saving annotated data as jsonl file ##
