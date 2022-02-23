@@ -1,10 +1,24 @@
 * Binary annotation 
   python3 -m prodigy textcat.manual dataset_name raw_oscar_25.jsonl --label TOXIC
 
-  python3 -m prodigy textcat.manual active_test raw_oscar_25.jsonl --label SEXIST
+  python3 -m prodigy textcat.manual manual-multi_test raw_oscar_25.jsonl --label SEXIST,RACIST
+  Output om båda samtidigt: "accept":["SEXIST","RACIST"]
+
 
 * Active annotation
   python3 -m prodigy textcat.teach active_test blank:en raw_oscar_25.jsonl --label SEXIST --patterns pattern_sexist-SEXIST.jsonl
-  python3 -m prodigy textcat.teach active_test blank:en raw_oscar_25.jsonl --label SEXIST,RACIST --patterns pattern_sexist-SEXIST.jsonl
+  python3 -m prodigy textcat.teach active_test en_core_web_sm raw_oscar_25.jsonl --label SEXIST --patterns pattern_sexist-SEXIST.jsonl
+  python3 -m prodigy textcat.teach active_test blank:sv raw_oscar_25.jsonl --label SEXIST --patterns pattern_sexist-SEXIST.jsonl
+  
+# With several labels here it is still binary and you only choose one at a time, but can have several patterns
+python3 -m prodigy textcat.teach active_test blank:en raw_oscar_25.jsonl 
+--label SEXIST,RACIST --patterns pattern_sexist-SEXIST.jsonl pattern_racist-RACIST.jsonl
+
 * From tutorial
   python3 -m prodigy textcat.teach textcat_insults blank:en ./reddit-comments.jsonl --label INSULT --patterns ./insults-patterns.jsonl
+
+* Output 
+
+python3 -m prodigy db-out active_test > annotated_active.jsonl
+
+
