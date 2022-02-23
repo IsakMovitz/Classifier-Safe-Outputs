@@ -12,6 +12,10 @@
 
 ### PRODIGY ###
 
+Maybe use jupyter notebook?
+
+Command: jupyter notebook
+
 Prodigy is using click 8.0.3 and is not compatible with the same click as Rubrix needs
 
 click version might be the problem, 
