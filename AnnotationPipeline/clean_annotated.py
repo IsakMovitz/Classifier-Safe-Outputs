@@ -12,13 +12,14 @@ def clean_annotation(input_filename, output_filename):
         text_sample = line_dict['text']
         starting_index = line_dict['starting_index']
         span_length = line_dict['span_length']
+        toxic_class = line_dict['toxic_class']
 
         if line_dict['answer'] == 'accept': # 1
             cleaned_data.append({"id":id_nr,"text":text_sample,"starting_index":starting_index,
-            "span_length":span_length,"toxic_class":1})
+            "span_length":span_length,"sexist_class":toxic_class,"racist_class":1})
         else:
             cleaned_data.append({"id":id_nr,"text":text_sample,"starting_index":starting_index,
-            "span_length":span_length,"toxic_class":0})
+            "span_length":span_length,"sexist_class":toxic_class,"racist_class":0})
 
     #Save cleaned back to jsonl format:
     with open(output_filename, 'w', encoding='utf-8') as f:
@@ -29,4 +30,4 @@ def clean_annotation(input_filename, output_filename):
                     f.write(json.dumps(item,ensure_ascii=False))
 
 
-clean_annotation("annotated_active.jsonl","clean_annotated_active.jsonl")
+clean_annotation("Data/annotated_racist_dataset.jsonl","Data/clean_annotated_racist.jsonl")

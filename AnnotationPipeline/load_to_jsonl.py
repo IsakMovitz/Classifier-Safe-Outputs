@@ -54,7 +54,7 @@ def parse_to_jsonl(data,span_length,filename,nr_samples):
         else:
             id_nr = id_nr - 1
 
-    with open("data/" + filename, 'w', encoding='utf-8') as f:
+    with open(filename, 'w', encoding='utf-8') as f:
         for item in random_samples:
             if item != random_samples[-1]:
                 f.write(json.dumps(item,ensure_ascii=False) + "\n")
@@ -62,8 +62,7 @@ def parse_to_jsonl(data,span_length,filename,nr_samples):
                 f.write(json.dumps(item,ensure_ascii=False))
 
 
-parse_to_jsonl(training_data,15,"oscar_50/raw_oscar_50.jsonl",51)  # Since index 41 is < 15 in length
-
+parse_to_jsonl(training_data,15,"Data/raw_oscar_50000.jsonl",50000)  # Since index 41 is < 15 in length
 
 
 def print_from_jsonl(filename):

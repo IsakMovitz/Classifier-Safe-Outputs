@@ -12,6 +12,12 @@
 python3 -m prodigy RECIPE DATASET_NAME SPACY_PIPELINE INPUT_DATA --label LABEL --patterns PATTERN
 
 python3 -m prodigy textcat.teach sexist_dataset blank:sv raw_oscar_50000.jsonl --label SEXIST --patterns pattern_sexist-SEXIST.jsonl
+python3 -m prodigy textcat.teach sexist_dataset blank:sv Data/raw_oscar_10.jsonl --label SEXIST --patterns Patterns/pattern_sexist-SEXIST.jsonl
+python3 -m prodigy textcat.teach racist_dataset blank:sv Data/raw_oscar_50000.jsonl --label RACIST --patterns Patterns/pattern_racist-RACIST.jsonl
+
+
+--exclude sexist_dataset
+
 
 ## 3: Saving annotated data as jsonl file ##
 
