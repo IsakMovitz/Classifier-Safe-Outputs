@@ -1,0 +1,26 @@
+
+## 1: Load data from Huggingface, parse and save in jsonl format ##
+
+  - run the load_to_json.py script to save
+  - saves data to .jsonl format
+
+## 2: Active annotation ##
+
+- textcat.teach = spacy classifier model
+- blank:sv = pipeline for swedish
+
+python3 -m prodigy RECIPE DATASET_NAME SPACY_PIPELINE INPUT_DATA --label LABEL --patterns PATTERN
+
+python3 -m prodigy textcat.teach sexist_dataset blank:sv raw_oscar_50000.jsonl --label SEXIST --patterns pattern_sexist-SEXIST.jsonl
+
+## 3: Saving annotated data as jsonl file ##
+
+python3 -m prodigy db-out DATASET_NAME  > OUTPUT_FILE
+
+python3 -m prodigy db-out sexist_dataset  > Data/annotated_sexist_dataset.jsonl
+
+
+## 4: Clean the jsonl file into more compact format/ remove unnecessary data added by Prodigy ##
+
+- run the clean_annotated script 
+- saves the data to a clean annotated .jsonl format

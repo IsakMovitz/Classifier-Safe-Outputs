@@ -3,7 +3,7 @@ import json
 def clean_annotation(input_filename, output_filename):
     cleaned_data = []
     #Open annotation file from Prodigy:
-    with open("data/" + input_filename, 'r') as json_file:
+    with open(input_filename, 'r') as json_file:
         json_list = list(json_file)
 
     for json_str in json_list:
@@ -21,7 +21,7 @@ def clean_annotation(input_filename, output_filename):
             "span_length":span_length,"toxic_class":0})
 
     #Save cleaned back to jsonl format:
-    with open("data/" + output_filename, 'w', encoding='utf-8') as f:
+    with open(output_filename, 'w', encoding='utf-8') as f:
             for item in cleaned_data:
                 if item != cleaned_data[-1]:
                     f.write(json.dumps(item,ensure_ascii=False) + "\n")
@@ -29,4 +29,4 @@ def clean_annotation(input_filename, output_filename):
                     f.write(json.dumps(item,ensure_ascii=False))
 
 
-clean_annotation("oscar_50/annotated_oscar_50.jsonl","oscar_50/clean_annotated_oscar_50.jsonl")
+clean_annotation("annotated_active.jsonl","clean_annotated_active.jsonl")

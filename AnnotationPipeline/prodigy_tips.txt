@@ -25,8 +25,26 @@
 
 ## 3: Saving annotated data as jsonl file ##
   python3 -m prodigy db-out toxic_binary > ./data/oscar_50/annotated_oscar_50.jsonl
+  python3 -m prodigy db-out active_test > annotated_active.jsonl
 
 ## 4: Clean the jsonl file into more compact format/ remove unnecessary data added by Prodigy ##
 
   - run the clean_annotated script 
   - saves the data to a clean annotated .jsonl format
+
+
+
+
+## Extra ## 
+
+* Binary annotation 
+  python3 -m prodigy textcat.manual dataset_name raw_oscar_25.jsonl --label TOXIC
+
+  python3 -m prodigy textcat.manual manual-multi_test raw_oscar_25.jsonl --label SEXIST,RACIST
+  Output om båda samtidigt: "accept":["SEXIST","RACIST"]
+
+
+* Active annotation
+  python3 -m prodigy textcat.teach active_test blank:en raw_oscar_25.jsonl --label SEXIST --patterns pattern_sexist-SEXIST.jsonl
+  python3 -m prodigy textcat.teach active_test en_core_web_sm raw_oscar_25.jsonl --label SEXIST --patterns pattern_sexist-SEXIST.jsonl
+  python3 -m prodigy textcat.teach active_test blank:sv raw_oscar_25.jsonl --label SEXIST --patterns pattern_sexist-SEXIST.jsonl
