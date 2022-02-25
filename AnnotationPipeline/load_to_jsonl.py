@@ -13,8 +13,8 @@ DatasetDict({
 '''
 
 ### Loading the data ###
-oscar_dataset = load_dataset('oscar-corpus/OSCAR-2109', 'deduplicated_sv', use_auth_token=True)
-training_data = oscar_dataset["train"] 
+# oscar_dataset = load_dataset('oscar-corpus/OSCAR-2109', 'deduplicated_sv', use_auth_token=True)
+# training_data = oscar_dataset["train"] 
 
 '''
 id: id of the instance
@@ -30,7 +30,7 @@ Right now just ignore it
 
 '''
 
-### Parsing into JSONL format ###
+### Parsing into JSONL format from Huggingface ###
 
 def parse_to_jsonl(data,span_length,filename,nr_samples):
     random_samples = []    
@@ -61,13 +61,37 @@ def parse_to_jsonl(data,span_length,filename,nr_samples):
             else:
                 f.write(json.dumps(item,ensure_ascii=False))
 
+#parse_to_jsonl(training_data,15,"Data/raw_racism_data_10.jsonl",10)  # Since index 41 is < 15 in length
 
-parse_to_jsonl(training_data,15,"Data/raw_oscar_50000.jsonl",50000)  # Since index 41 is < 15 in length
+
+### Sampling spans from a jsonl file with id,text ###
+
+def sample_span_from_jsonl(input_filename,output_filename,span_length):
+
+    with open(input_filename, 'r') as json_file:
+            json_list = list(json_file)
+
+    random_samples = []
+    for json_str in json_list:
+        line_dict = json.loads(json_str)
+
+        id_nr = line_dict['id']
+        instance_text = line_dict['text']
+        instance_text_list = instance_text.split(' ')
+
+        length = len(instance_text_list)
+        if length > span_length:
+            starting_index = random.randrange(0,length - span_length)
+            random_sample_list = instance_text_list[starting_index:starting_index + span_length]
+
+            # Back to string
+            str1 = " " 
+            text_sample = str1.join(random_sample_list)
+            random_samples.append({"id":id_nr,"text":text_sample,"starting_index":starting_index,"span_length":span_length})
+        
+    with open(output_filename, 'w', encoding='utf-8') as f:
+            for item in random_samples:
+                f.write(json.dumps(item,ensure_ascii=False) + "\n")
 
 
-def print_from_jsonl(filename):
-    with open("data/" + filename) as f:
-        for line in f:
-            print(line)
-
-#print_from_jsonl("raw_oscar_100.jsonl")
+#sample_span_from_jsonl('Data/pre_search_racism_whole.jsonl','Data/samples_racism.jsonl',15)
