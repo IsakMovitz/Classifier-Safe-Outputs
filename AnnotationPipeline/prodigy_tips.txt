@@ -32,8 +32,6 @@
   - run the clean_annotated script 
   - saves the data to a clean annotated .jsonl format
 
-
-
 ## Extra ## 
 
 * Binary annotation 
@@ -47,3 +45,4 @@
   python3 -m prodigy textcat.teach active_test blank:en raw_oscar_25.jsonl --label SEXIST --patterns pattern_sexist-SEXIST.jsonl
   python3 -m prodigy textcat.teach active_test en_core_web_sm raw_oscar_25.jsonl --label SEXIST --patterns pattern_sexist-SEXIST.jsonl
   python3 -m prodigy textcat.teach active_test blank:sv raw_oscar_25.jsonl --label SEXIST --patterns pattern_sexist-SEXIST.jsonl
+  

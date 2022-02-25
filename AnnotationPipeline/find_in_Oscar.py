@@ -34,7 +34,9 @@ Right now just ignore it
 
 def search_and_parse_to_jsonl(data,filename,nr_samples):
 
-    keywords = ["invandrare","muslim","nmr","jude","judar","judisk", "neger","blatte","etnisk"]
+    #keywords = ["invandrare","muslim","nmr","jude","judar","judisk", "neger","blatte","etnisk"]
+    keywords = ["jävla","jävel","idiot","dum","korkad","hatar"]
+
 
     samples = []    
     id_nr = -1
@@ -56,4 +58,4 @@ def search_and_parse_to_jsonl(data,filename,nr_samples):
     
              
 
-#search_and_parse_to_jsonl(training_data,"Data/pre_search_racism_whole.jsonl",10164521)
+#search_and_parse_to_jsonl(training_data,"Data/pre_search_threat_million.jsonl",1000000)

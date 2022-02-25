@@ -29,7 +29,6 @@ What to do if the length of an id of raw_text is < 15 words?
 Right now just ignore it
 
 '''
-
 ### Parsing into JSONL format from Huggingface ###
 
 def parse_to_jsonl(data,span_length,filename,nr_samples):
@@ -63,7 +62,6 @@ def parse_to_jsonl(data,span_length,filename,nr_samples):
 
 #parse_to_jsonl(training_data,15,"Data/raw_racism_data_10.jsonl",10)  # Since index 41 is < 15 in length
 
-
 ### Sampling spans from a jsonl file with id,text ###
 
 def sample_span_from_jsonl(input_filename,output_filename,span_length):
@@ -92,6 +90,5 @@ def sample_span_from_jsonl(input_filename,output_filename,span_length):
     with open(output_filename, 'w', encoding='utf-8') as f:
             for item in random_samples:
                 f.write(json.dumps(item,ensure_ascii=False) + "\n")
-
 
 #sample_span_from_jsonl('Data/pre_search_racism_whole.jsonl','Data/samples_racism.jsonl',15)

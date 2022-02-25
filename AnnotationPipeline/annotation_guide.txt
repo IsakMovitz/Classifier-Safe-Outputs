@@ -13,7 +13,7 @@ python3 -m prodigy RECIPE DATASET_NAME SPACY_PIPELINE INPUT_DATA --label LABEL -
 
 python3 -m prodigy textcat.teach sexist_dataset blank:sv raw_oscar_50000.jsonl --label SEXIST --patterns pattern_sexist-SEXIST.jsonl
 python3 -m prodigy textcat.teach sexist_dataset blank:sv Data/raw_oscar_10.jsonl --label SEXIST --patterns Patterns/pattern_sexist-SEXIST.jsonl
-python3 -m prodigy textcat.teach racist_dataset blank:sv Data/raw_oscar_300-000.jsonl --label RACIST --patterns Patterns/pattern_racist-RACIST.jsonl
+python3 -m prodigy textcat.teach racist_dataset blank:sv Data/samples_racism.jsonl --label RACIST --patterns Patterns/pattern_racist-RACIST.jsonl
 
 
 python3 -m prodigy textcat.teach sexist_dataset blank:sv Data/raw_oscar_300-000.jsonl --label SEXIST --exclude sexist_dataset
@@ -30,3 +30,15 @@ python3 -m prodigy db-out sexist_dataset  > Data/annotated_sexist_dataset.jsonl
 
 - run the clean_annotated script 
 - saves the data to a clean annotated .jsonl format
+
+
+## Test training a model on our annotated data ##
+
+python3 -m prodigy train MODEL_NAME --textcat-multilabel DATASET_NAME --eval-split DATA_SPLIT
+
+python3 -m prodigy train sexist-model --textcat-multilabel sexist_dataset --base-model blank:sv --eval-split 0.2
+
+## Plotting ## 
+python3 -m prodigy train-curve sexist-model --textcat-multilabel sexist_dataset --base-model blank:sv --eval-split 0.2
+
+python3 -m prodigy train-curve --textcat-multilabel sexist_dataset --show-plot
