@@ -1,0 +1,590 @@
+
+ ########### data ###########
+_________________________________________________________________
+
+** it_sakerhet** 
+-------------
+
+** systemutveckling** 
+-------------
+webbhotell_och_webbserver
+php
+databaser
+personlig_utveckling_studier_och_arbetsliv
+webbutveckling_och_javascript
+egna_projekt
+c_c_och_assembler
+python
+ovriga_sprak
+java
+ovriga_utvecklingsfragor
+visual_basic_classic_och_vb_script
+c_vb_net_och_net_framework
+
+** hardvara_pc** 
+-------------
+pc_koprad_grafikkort
+data
+pc_koprad_barbart
+pc_koprad_tillbehor
+pc_koprad_bildskarmar
+pc_koprad_stationart
+
+** mac_och_macos** 
+-------------
+mac_koprad
+programvara_macos
+
+** programvara_ovriga_operativsystem** 
+-------------
+
+** ovriga_dator_och_it_diskussioner** 
+-------------
+
+** telefoni_surfplattor_och_lasplattor** 
+-------------
+telefoni_operatorer
+telefoner_surf_och_lasplattor_koprad
+telefoner_surf_och_lasplattor_felsokning_och_problem
+
+** programvara_windows** 
+-------------
+
+** dator_och_konsolspel** 
+-------------
+spel_support
+spelrelaterat
+spel_allmant
+konsol_hardvarudiskussioner
+konsol_hardvarusupport
+spel_retro
+
+** natverk_och_datorkommunikation** 
+-------------
+
+ ########### rest ###########
+_________________________________________________________________
+
+** arkiverade_forum** 
+-------------
+recycle_your_stuff
+phreaking
+resekompisar
+sexnoveller
+sista_utvagen_for_amnen_som_saknar_eget_forum
+muhammedavbildningarna_och_relaterade_protester
+open_source_och_fri_mjukvara
+dator_och_it_support
+egna_texter_noveller_och_lyrik_arkiverad_version
+det_sekulara_samhallet
+tavlingar
+os_rio_de_janeiro_2016
+livsnjutare_och_finsmakare
+integration_och_invandring_arkiverad_version
+vardagsbekymmer
+antisemitism_sionism_och_judiska_maktforhallanden
+kriminella_natverk_och_brottslighet_arkiverad_version
+carding
+jordbavningskatastrofen_i_asien
+underground
+amator_och_piratradio
+fotbolls_vm_i_brasilien_2014
+natapotek_och_drogshoppar
+
+ ########### society ###########
+_________________________________________________________________
+
+** stadsplanering_infrastruktur_och_arkitektur** 
+-------------
+
+** olyckor_och_katastrofer** 
+-------------
+os_london_2012
+evighetsdiskussioner_arkiverad_version
+fotbolls_vm_i_ryssland_2018
+
+** amnen_som_inga_andra_forum_handlar_om** 
+-------------
+
+** organiserad_brottslighet** 
+-------------
+
+** juridik** 
+-------------
+historiska_olyckor_och_katastrofer
+
+** revisionism** 
+-------------
+
+** aktuella_brott_och_kriminalfall** 
+-------------
+
+** utbildning_och_studier** 
+-------------
+
+** arbetsliv_och_arbetsmarknad** 
+-------------
+utlandsstudier
+
+** vapen_och_militar** 
+-------------
+
+** kriminalhistoria** 
+-------------
+
+** overvakning_och_integritet** 
+-------------
+
+** jamstalldhet_och_diskriminering** 
+-------------
+
+** foretagsskvaller** 
+-------------
+fra_lagen
+natverksforsaljning_och_pyramidspel
+
+** korruption_och_missforhallanden_i_offentlig_verksamhet** 
+-------------
+
+** brott_och_brottsbekampning** 
+-------------
+
+** forsvunna_personer** 
+-------------
+
+** konspirationer_och_alternativa_teorier** 
+-------------
+
+ ########### drugs ###########
+_________________________________________________________________
+
+** cannabis** 
+-------------
+nwo_illuminati_frimurare_och_ordensvasende
+cannabisaktivism
+cannabiskultur
+
+** psykedeliska_substanser** 
+-------------
+cannabis_i_media
+
+** centralstimulantia** 
+-------------
+
+** opiater_och_andra_opioider** 
+-------------
+alternativa_teorier_om_covid_19
+mordet_pa_olof_palme
+911
+
+** tripp_och_rusrapporter** 
+-------------
+
+** drogrehabilitering** 
+-------------
+
+** drogakuten** 
+-------------
+
+** bensodiazepiner** 
+-------------
+
+** ovriga_droger** 
+-------------
+rokmixar_och_cannabinoider
+
+** dopning_och_dopningspreparat** 
+-------------
+kurrapporter
+
+** drogodling_och_drogtillverkning** 
+-------------
+dopningspreparat
+
+ ########### travel ###########
+_________________________________________________________________
+
+** asien** 
+-------------
+thailand
+
+** europa** 
+-------------
+sverige_norden_och_baltikum
+
+** ovriga_resediskussioner** 
+-------------
+flyg_allmant
+
+** ovriga_varlden** 
+-------------
+usa
+
+ ########### economy ###########
+_________________________________________________________________
+
+** bitcoin_och_andra_virtuella_valutor** 
+-------------
+
+** privatekonomi** 
+-------------
+
+** e_handel_frakt_och_konsumentfragor** 
+-------------
+frakt_och_paketutlamning
+
+** aktier** 
+-------------
+
+** vardepapper_valutor_och_ravaror_allmant** 
+-------------
+
+** ekonomi_ovrigt** 
+-------------
+
+** nationalekonomi** 
+-------------
+
+** fonder** 
+-------------
+
+** foretagande_och_foretagsekonomi** 
+-------------
+
+ ########### sex ###########
+_________________________________________________________________
+
+** erotik_och_sexualitet** 
+-------------
+sextekniker_och_sexhjalpmedel
+
+** eskortservice_och_prostitution** 
+-------------
+
+** pornografi** 
+-------------
+prostitution_recensioner
+
+** bdsm_fetischism_parafili_och_kinky_sex** 
+-------------
+
+ ########### mobility ###########
+_________________________________________________________________
+
+** bilar** 
+-------------
+prostitution_etik_moral_och_politik
+bilar_koprad
+
+** trafik_och_korkortsfragor** 
+-------------
+
+** motorcyklar_och_mopeder** 
+-------------
+
+** ovriga_fordon** 
+-------------
+
+** batar_och_sjoliv** 
+-------------
+
+** cykel** 
+-------------
+
+ ########### lifestyle ###########
+_________________________________________________________________
+
+** klader_och_accessoarer** 
+-------------
+klockor_och_accessoarer
+klader_och_skor_allmant
+klader_och_skor_koprad
+klader_och_skor_klassisk_stil
+
+** rollspel_och_sallskapsspel** 
+-------------
+
+** urban_exploration** 
+-------------
+
+** tatuering_och_piercing** 
+-------------
+tatuering
+tatueringsmotiv
+piercing_och_body_modification
+
+** har_och_kroppsvard** 
+-------------
+
+** subkulturer_och_socioekonomiska_livsstilar** 
+-------------
+
+** prepping_och_survivalism** 
+-------------
+
+** poker_spel_och_dobbel** 
+-------------
+speldagbocker
+poker
+pokerhander
+
+** jakt_fiske_och_vildmark** 
+-------------
+friluftsliv_och_vildmark
+
+** hobby** 
+-------------
+
+ ########### science ###########
+_________________________________________________________________
+
+** biologi** 
+-------------
+rasforskning
+ekologi_natur_djur_och_vaxter
+genetik_molekylarbiologi_och_evolutionsbiologi
+
+** kemi_och_pyroteknik** 
+-------------
+
+** filosofi** 
+-------------
+
+** fysik_matematik_och_teknologi** 
+-------------
+matematiska_och_naturvetenskapliga_uppgifter
+fysik_matematik_och_teknologi_allmant
+
+** socialantropologi_etnologi_och_sociologi** 
+-------------
+
+** psykologi** 
+-------------
+psykologi_allmant
+psykisk_halsa
+somn_och_drommar
+
+** paranormala_fenomen_ockultism_och_ufologi** 
+-------------
+
+** historia** 
+-------------
+ufologi
+
+** klimat_miljo_och_geovetenskap** 
+-------------
+
+** sprak** 
+-------------
+
+** astronomi_och_rymdfart** 
+-------------
+
+** medicin_och_halsa** 
+-------------
+psykiatri_och_psykofarmaka
+alternativ_medicin
+coronaviruset_och_covid_19
+
+** religion** 
+-------------
+
+ ########### home ###########
+_________________________________________________________________
+
+** relationer_och_samlevnad** 
+-------------
+relationer_och_samlevnad_allmant
+relationsakuten
+
+** bostad_hem_och_tradgard** 
+-------------
+el_vvs_och_bygg
+tradgard_vaxter_och_odling
+inredning
+bostadsorter_och_omraden
+
+** barn_och_familj** 
+-------------
+
+** husdjur** 
+-------------
+
+** hemelektronik_ljud_och_bild** 
+-------------
+ljudanlaggningar
+ovrig_hemelektronik
+tv_bild_och_mediautrustning
+streamingtjanster_och_mediaforetag
+hogtalare
+horlurar
+
+ ########### politics ###########
+_________________________________________________________________
+
+** eu** 
+-------------
+
+** politik_utrikes** 
+-------------
+politik_usa
+
+** konservatism** 
+-------------
+
+** liberalism_och_anarkokapitalism** 
+-------------
+politik_ryssland_och_det_nara_utlandet
+
+** politik_inrikes** 
+-------------
+politiker
+valsystemet_och_statsskicket
+coronapandemin
+partier_och_partipolitik
+
+** integration_och_invandring** 
+-------------
+
+** terrorism** 
+-------------
+
+** nationalsocialism_fascism_och_nationalism** 
+-------------
+nationalsocialism_och_nationalism_gatuaktioner
+
+** anarkism_socialism_och_autonom_vanster** 
+-------------
+
+** feminism** 
+-------------
+
+** narkotikapolitik** 
+-------------
+
+ ########### sport ###########
+_________________________________________________________________
+
+** ovrig_sport** 
+-------------
+ovrig_sport_eventprat
+
+** traning_kost_och_kosttillskott** 
+-------------
+traningsjournaler_och_medlemsbilder
+traning
+naring_kost_och_kosttillskott
+
+** fotboll** 
+-------------
+fotboll_matchprat
+
+** bollsport** 
+-------------
+bollsport_matchprat
+
+** vintersport** 
+-------------
+vintersport_eventprat
+
+** hockey** 
+-------------
+hockey_matchprat
+
+** motorsport** 
+-------------
+motorsport_eventprat
+
+** kampsport** 
+-------------
+
+ ########### culture ###########
+_________________________________________________________________
+
+** kultur_allmant** 
+-------------
+konst_estetik_och_konsthistoria
+eget_konstnarligt_skapande
+dans_balett_teater_och_opera
+
+** medier_och_journalistik** 
+-------------
+kampsport_matchprat
+
+** litteratur** 
+-------------
+egna_texter_noveller_och_lyrik
+
+** serier_och_serietidningar** 
+-------------
+
+** tv_serier_och_tv_program** 
+-------------
+
+** youtubers** 
+-------------
+
+** censur_och_yttrandefrihet** 
+-------------
+
+** film_och_filmproduktion** 
+-------------
+filmproduktion
+film_allmant
+film_listor_och_rekommendationer
+
+** humor** 
+-------------
+diskussioner_om_humor
+
+** musik** 
+-------------
+musik_allmant
+egen_musik_teknik_instrument_inkop_och_produktion
+festivaler_och_spelningar
+egen_musik_feedback
+musik_listor_rekommendationer_och_omrostningar
+
+** fotografi** 
+-------------
+foto_produkter_och_koprad
+foto_allmant
+digital_bildbehandling
+
+** grafisk_formgivning** 
+-------------
+
+** reklam_och_marknadsforing** 
+-------------
+
+** radio_och_podcast** 
+-------------
+
+** graffiti_och_street_art** 
+-------------
+
+** kandisskvaller** 
+-------------
+
+ ########### food ###########
+_________________________________________________________________
+
+** matlagning_och_metoder** 
+-------------
+fardigmat_och_halvfabrikat
+matredskap_och_inkopsstallen
+bakning_matbrod_och_kakor
+dieter_och_specialkost
+
+** tobak** 
+-------------
+
+** restauranger_barer_och_nattklubbar** 
+-------------
+
+** godis_frukt_och_snacks** 
+-------------
+
+** alkohol_och_dryck** 
+-------------
+hembranning_och_dryckestillverkning
