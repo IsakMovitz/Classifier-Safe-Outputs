@@ -1,0 +1,43 @@
+## rest ##
+    ** arkiverade_forum**  CHECK
+        kriminella_natverk_och_brottslighet_arkiverad_version
+        integration_och_invandring_arkiverad_version
+        antisemitism_sionism_och_judiska_maktforhallanden
+        sexnoveller
+        muhammedavbildningarna_och_relaterade_protester 
+
+## society ##
+
+    ** organiserad_brottslighet** 
+    ** aktuella_brott_och_kriminalfall** CHECK
+    ** brott_och_brottsbekampning** 
+    ** konspirationer_och_alternativa_teorier** 
+    ** jamstalldhet_och_diskriminering** 
+
+## sex ##
+    ** pornografi** 
+        prostitution_recensioner
+
+## mobility ##
+    ** bilar**
+        prostitution_etik_moral_och_politik
+
+## science ##
+    ** biologi** CHECK
+        rasforskning CHECK
+    ** socialantropologi_etnologi_och_sociologi** 
+    ** religion** 
+
+
+## politics ##
+    ** konservatism** 
+    ** integration_och_invandring** 
+    ** terrorism** 
+    ** nationalsocialism_fascism_och_nationalism** 
+        nationalsocialism_och_nationalism_gatuaktioner
+
+    ** anarkism_socialism_och_autonom_vanster** 
+    ** feminism** 
+
+## culture ##
+    ** censur_och_yttrandefrihet** 

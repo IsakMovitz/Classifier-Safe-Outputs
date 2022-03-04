@@ -1,57 +1,51 @@
 import ijson
 
-json_file_name = "./test.json"
+'''
+I guess this works but would be nicer with pandas to work with the smaller files as well, maybe does not matter
+Could also use jq all the way almost, but we want jsonl format in the end.
 
+Only problem now is how exactly to get the toxic data.
+
+
+Chunks of 9:
+   start_map
+   map_key
+path   start_array
+path.item   string
+path.item   string
+path   end_array
+   map_key
+text   string
+   end_map
+'''
+
+# Whole dataset
 flashback_file = "./flashback.json"
 
-data = ijson.parse(open(flashback_file,'r'),multiple_values=True)
+# Topic of dataset
+aktuella_file = "./topics_files/aktuella_brott_och_kriminalfall.json"
 
-# Chunks of 9:
-#    start_map
-#    map_key
-# path   start_array
-# path.item   string
-# path.item   string
-# path   end_array
-#    map_key
-# text   string
-#    end_map
 
-##########################################
+# Subtopic of dataset
+rasforskning_file = "./subtopics_files/rasforskning.json"
 
-#    start_map   None
-#    map_key   path
-# path   start_array   None
-# path.item   string   data
-# path.item   string   it_sakerhet
-# path   end_array   None
-# text   string   __087:
-# end_map   None
 
-#############################
-# first 100 000 only data
 
-range_of_instances = 9
+data = ijson.parse(open(rasforskning_file,'r'),multiple_values=True)
+
+
+
+
+range_of_instances = 100
 it = 0
 for prefix, event, value in data:
+
     it += 1
  
     if it <= range_of_instances:
 
-        if value == 'data':
-            print(str(prefix) + "   " + str(event) + "   " + str(value))
-            #print()
+        print(value)
+        #print(str(prefix) + "   " + str(event) + "   " + str(value))
+          
     else:
         break
-
-
-# for prefix, the_type, value in ijson.parse(open(flashback_file),multiple_values=True):
-#     print(str(prefix) + "   " + str(the_type) + "   " + str(value))
-
-
-
-# for i in range(1):
-
-
-# for prefix, the_type, value in ijson.parse(open(flashback_file),multiple_values=True):
-#     print(str(prefix) + "   " + str(the_type) + "   " + str(value))
