@@ -11,6 +11,15 @@ aktuella_file = "./topics_files/aktuella_brott_och_kriminalfall.json"
 
 organiserat_brott_file = "./topics_files/organiserad_brottslighet.json"
 
+# Ending with : is a user 
+# \n is new comment
+
+#1 Copy text to txt 
+#2 strip of unneccessary words
+#3 select span of 15 with keyword in the middle?
+#4 convert into jsonl format
+
+
 
 # with open(rasforskning_file) as f:
 #    data = json.load(f)
@@ -45,7 +54,18 @@ organiserat_brott_file = "./topics_files/organiserad_brottslighet.json"
 
 # jq 'select(.path[2]=="antisemitism_sionism_och_judiska_maktforhallanden")' ./topics_files/arkiverade_forum.json | less
 
+# jq 'select(.path[1]=="jamstalldhet_och_diskriminering")' flashback.json > jamstalldhet_och_diskriminering.json
 
+# jq 'select(.path[2]=="prostitution_recensioner")' flashback.json > prostitution_recensioner.json
+
+# CURRENT # 
+# jq '' ./subtopics_files/rasforskning.json | less
+
+# jq '.text' ./subtopics_files/rasforskning.json > ./sampled_data/test1.txt
+
+data | jq '.[] | select(.text|test("slav")) | less
+
+jq '.[] | .text | select(.|test("^[slav]"))'
 
 def print_chunks():
     chunks = pd.read_json(organiserat_brott_file, lines=True, chunksize = 100, orient='records')

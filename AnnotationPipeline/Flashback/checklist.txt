@@ -12,15 +12,15 @@
     ** aktuella_brott_och_kriminalfall** CHECK
     ** brott_och_brottsbekampning** 
     ** konspirationer_och_alternativa_teorier** 
-    ** jamstalldhet_och_diskriminering** 
+    ** jamstalldhet_och_diskriminering** CHECK
 
-## sex ##
-    ** pornografi** 
-        prostitution_recensioner
+## sex ## CHECK
+    ** pornografi**  CHECK
+        prostitution_recensioner CHECK
 
-## mobility ##
-    ** bilar**
-        prostitution_etik_moral_och_politik
+## mobility ## CHECK
+    ** bilar** CHECK
+        prostitution_etik_moral_och_politik CHECK
 
 ## science ##
     ** biologi** CHECK
@@ -31,13 +31,13 @@
 
 ## politics ##
     ** konservatism** 
-    ** integration_och_invandring** 
-    ** terrorism** 
-    ** nationalsocialism_fascism_och_nationalism** 
+    ** integration_och_invandring** CHECK
+    ** terrorism** CHECK
+    ** nationalsocialism_fascism_och_nationalism** CHECK
         nationalsocialism_och_nationalism_gatuaktioner
 
     ** anarkism_socialism_och_autonom_vanster** 
-    ** feminism** 
+    ** feminism** CHECK
 
 ## culture ##
     ** censur_och_yttrandefrihet** 

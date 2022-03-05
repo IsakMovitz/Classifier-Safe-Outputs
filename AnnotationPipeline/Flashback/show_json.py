@@ -24,28 +24,37 @@ flashback_file = "./flashback.json"
 
 # Topic of dataset
 aktuella_file = "./topics_files/aktuella_brott_och_kriminalfall.json"
-
+jamstalldhet_och_diskriminering_file = "./topics_files/jamstalldhet_och_diskriminering.json"
 
 # Subtopic of dataset
 rasforskning_file = "./subtopics_files/rasforskning.json"
 
+keywords_list = []
+with open('keywords.txt') as keyword_file:
+    for line in keyword_file:
+        word = line.strip('\n')
+        keywords_list.append(word)
 
+data = ijson.parse(open(jamstalldhet_och_diskriminering_file,'r'),multiple_values=True)
 
-data = ijson.parse(open(rasforskning_file,'r'),multiple_values=True)
-
-
-
-
-range_of_instances = 100
+ignore_words_list = []
+range_of_instances = 0
 it = 0
 for prefix, event, value in data:
 
     it += 1
- 
-    if it <= range_of_instances:
 
-        print(value)
-        #print(str(prefix) + "   " + str(event) + "   " + str(value))
+    if it <= range_of_instances:
+        
+        if value != None:
+            if it <= 7:
+                ignore_words_list.append(value)
+            elif value not in ignore_words_list:
+                print(value)
+                
+        # if value != None:
+        #     #print(value)
+        # #print(str(prefix) + "   " + str(event) + "   " + str(value))
           
     else:
         break
