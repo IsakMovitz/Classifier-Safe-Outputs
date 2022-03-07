@@ -3,20 +3,20 @@
 _________________________________________________________________
 
 ** arkiverade_forum** 
-kriminella_natverk_och_brottslighet_arkiverad_version
-integration_och_invandring_arkiverad_version
-antisemitism_sionism_och_judiska_maktforhallanden
-sexnoveller
-muhammedavbildningarna_och_relaterade_protester 
+kriminella_natverk_och_brottslighet_arkiverad_version NOT-USED
+integration_och_invandring_arkiverad_version  NOT-USED
+antisemitism_sionism_och_judiska_maktforhallanden   CHECK
+sexnoveller                                         NOT-USED
+muhammedavbildningarna_och_relaterade_protester     CHECK
  
 
  ########### society ###########
 _________________________________________________________________
 
-** organiserad_brottslighet** 
+** organiserad_brottslighet** CHECK
 -------------
 
-** aktuella_brott_och_kriminalfall** 
+** aktuella_brott_och_kriminalfall**  CHECK
 -------------
 
 ** brott_och_brottsbekampning** 
@@ -25,17 +25,8 @@ _________________________________________________________________
 ** konspirationer_och_alternativa_teorier** 
 -------------
 
-** jamstalldhet_och_diskriminering** 
+** jamstalldhet_och_diskriminering**    CHECK
 -------------
-
-
- ########### sex ###########
-_________________________________________________________________
-
-** pornografi** 
--------------
-prostitution_recensioner
-
 
  ########### mobility ###########
 _________________________________________________________________
@@ -49,7 +40,7 @@ _________________________________________________________________
 
 ** biologi** 
 -------------
-rasforskning
+rasforskning      CHECK
 
 ** socialantropologi_etnologi_och_sociologi** 
 -------------
@@ -63,24 +54,24 @@ _________________________________________________________________
 ** konservatism** 
 -------------
 
-** integration_och_invandring** 
+** integration_och_invandring** CHECK
 -------------
 
-** terrorism** 
+** terrorism**  CHECK
 -------------
 
-** nationalsocialism_fascism_och_nationalism** 
+** nationalsocialism_fascism_och_nationalism** CHECK
 -------------
 nationalsocialism_och_nationalism_gatuaktioner
 
 ** anarkism_socialism_och_autonom_vanster** 
 -------------
 
-** feminism** 
--------------
+** feminism**     CHECK
+------------- 
 
  ########### culture ###########
 _________________________________________________________________
 
-** censur_och_yttrandefrihet** 
+** censur_och_yttrandefrihet**  LATER IF NEEDED
 -------------

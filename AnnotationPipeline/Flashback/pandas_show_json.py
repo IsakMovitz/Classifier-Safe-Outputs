@@ -54,18 +54,30 @@ organiserat_brott_file = "./topics_files/organiserad_brottslighet.json"
 
 # jq 'select(.path[2]=="antisemitism_sionism_och_judiska_maktforhallanden")' ./topics_files/arkiverade_forum.json | less
 
-# jq 'select(.path[1]=="jamstalldhet_och_diskriminering")' flashback.json > jamstalldhet_och_diskriminering.json
+# jq 'select(.path[1]=="integration_och_invandring")' flashback.json > integration_och_invandring.json
 
-# jq 'select(.path[2]=="prostitution_recensioner")' flashback.json > prostitution_recensioner.json
+# jq 'select(.path[2]=="nationalsocialism_fascism_och_nationalism")' flashback.json > nationalsocialism_fascism_och_nationalism.json
 
 # CURRENT # 
 # jq '' ./subtopics_files/rasforskning.json | less
 
 # jq '.text' ./subtopics_files/rasforskning.json > ./sampled_data/test1.txt
 
-data | jq '.[] | select(.text|test("slav")) | less
+# jq '.text' ./subtopics_files/feminism.json > ./sampled_data/feminism.txt
+# jq '.text' ./subtopics_files/antisemitism_sionism_och_judiska_maktforhallanden.json > ./sampled_data/antisemitism_sionism_och_judiska_maktforhallanden.txt
+# jq '.text' ./subtopics_files/jamstalldhet_och_diskriminering.json > ./sampled_data/jamstalldhet_och_diskriminering.txt
+# jq '.text' ./subtopics_files/terrorism.json > ./sampled_data/terrorism.txt
+# jq '.text' ./subtopics_files/integration_och_invandring.json > ./sampled_data/integration_och_invandring.txt
+# jq '.text' ./subtopics_files/nationalsocialism_fascism_och_nationalism.json > ./sampled_data/nationalsocialism_fascism_och_nationalism.txt
 
-jq '.[] | .text | select(.|test("^[slav]"))'
+
+# jq 'select(.path[2]=="muhammedavbildningarna_och_relaterade_protester")' ./topics_files/arkiverade_forum.json > muhammedavbildningarna_och_relaterade_protester.json
+
+# jq 'select(.path[2]=="censur_och_yttrandefrihet")' ./topics_files/arkiverade_forum.json > muhammedavbildningarna_och_relaterade_protester.json
+
+# data | jq '.[] | select(.text|test("slav")) | less
+
+# jq '.[] | .text | select(.|test("^[slav]"))'
 
 def print_chunks():
     chunks = pd.read_json(organiserat_brott_file, lines=True, chunksize = 100, orient='records')
