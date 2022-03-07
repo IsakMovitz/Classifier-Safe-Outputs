@@ -1,3 +1,9 @@
 AnnotationPipeline/__pycache__
 AnnotationPipeline/Data
 AnnotationPipeline/Patterns
+AnnotationPipeline/sexist-model
+AnnotationPipeline/Flashback/*.json
+AnnotationPipeline/Flashback/topics_files
+AnnotationPipeline/Flashback/subtopics_files
+AnnotationPipeline/Flashback/sampled_data/clean_data
+AnnotationPipeline/Flashback/sampled_data/thread_text_files

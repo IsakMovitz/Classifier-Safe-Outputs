@@ -91,4 +91,4 @@ def sample_span_from_jsonl(input_filename,output_filename,span_length):
             for item in random_samples:
                 f.write(json.dumps(item,ensure_ascii=False) + "\n")
 
-#sample_span_from_jsonl('Data/pre_search_racism_whole.jsonl','Data/samples_racism.jsonl',15)
+sample_span_from_jsonl('Data/pre_search_threat_million.jsonl','Data/samples_threats.jsonl',15)

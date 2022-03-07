@@ -2,7 +2,7 @@ import spacy
 
 nlp = spacy.load("sexist-model/model-best")
 
-doc = nlp("knulla kåt porr prostituerad")
+doc = nlp("Jag gillar att knulla")
 print(doc.cats)
 
 doc = nlp("massage escort eskort milf")

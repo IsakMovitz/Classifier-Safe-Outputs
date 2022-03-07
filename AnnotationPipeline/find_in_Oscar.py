@@ -29,14 +29,12 @@ What to do if the length of an id of raw_text is < 15 words?
 Right now just ignore it
 
 '''
-
 ### Parsing into JSONL format ###
 
 def search_and_parse_to_jsonl(data,filename,nr_samples):
 
     #keywords = ["invandrare","muslim","nmr","jude","judar","judisk", "neger","blatte","etnisk"]
     keywords = ["jävla","jävel","idiot","dum","korkad","hatar"]
-
 
     samples = []    
     id_nr = -1

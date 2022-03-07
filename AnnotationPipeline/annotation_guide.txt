@@ -14,7 +14,7 @@ python3 -m prodigy RECIPE DATASET_NAME SPACY_PIPELINE INPUT_DATA --label LABEL -
 python3 -m prodigy textcat.teach sexist_dataset blank:sv raw_oscar_50000.jsonl --label SEXIST --patterns pattern_sexist-SEXIST.jsonl
 python3 -m prodigy textcat.teach sexist_dataset blank:sv Data/raw_oscar_10.jsonl --label SEXIST --patterns Patterns/pattern_sexist-SEXIST.jsonl
 python3 -m prodigy textcat.teach racist_dataset blank:sv Data/samples_racism.jsonl --label RACIST --patterns Patterns/pattern_racist-RACIST.jsonl
-
+python3 -m prodigy textcat.teach threat_dataset blank:sv Data/samples_threats.jsonl --label THREAT
 
 python3 -m prodigy textcat.teach sexist_dataset blank:sv Data/raw_oscar_300-000.jsonl --label SEXIST --exclude sexist_dataset
 

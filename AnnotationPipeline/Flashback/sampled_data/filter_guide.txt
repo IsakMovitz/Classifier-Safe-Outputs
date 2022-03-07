@@ -1,0 +1,20 @@
+Every row is one instance of 'text'.
+Could do (thread,id,start_index, span_length)
+
+# 1 Copy text to txt 
+# 2 strip of unneccessary words
+# 3 select span of 15 where one of the keywords is present
+# 4 convert into jsonl format
+
+jq '.text' ./subtopics_files/rasforskning.json > ./sampled_data/test1.txt
+
+{
+  "path": [
+    "science",
+    "biologi",
+    "rasforskning"
+  ],
+  "text": [row in txt file]
+}
+
+jq '.text' ./subtopics_files/prostitution_etik_moral_och_politik.json > ./sampled_data/prostitution_etik_moral_och_politik.txt
