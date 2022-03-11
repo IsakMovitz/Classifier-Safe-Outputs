@@ -1,4 +1,19 @@
 
+## CURRENT PIPELINE COMMANDS ##
+
+Load for annotation:
+python3 -m prodigy textcat.teach test2_flashback_dataset blank:sv NEW_DATA/shuffled_keyword_flashback_dataset.jsonl --label SEVERE_TOXIC
+
+Save dataset into file:
+python3 -m prodigy db-out test_flashback_dataset  > Data/annotated_test_flashback_dataset.jsonl
+
+
+Train a model on dataset:
+
+python3 -m prodigy train test_flashback-model --textcat-multilabel test_flashback_dataset --base-model blank:sv --eval-split 0.2
+
+
+###############################
 ## 1: Load data from Huggingface, parse and save in jsonl format ##
 
   - run the load_to_json.py script to save

@@ -104,38 +104,79 @@ def clean_data(input_file, output_file):
                 while '' in text:
                     text.remove('')
 
-         
-  
                 if len(text) >= 15:
                     
                     f.write(json.dumps(result,ensure_ascii=False) + "\n")
               
-
-
 def createDataset(input_txt,keyword_name,keyword_final_name,random_name,random_final_name, thread):
 
 
-    extract_keyword_json(input_txt,keyword_name, rasforskning_thread)           
-    extract_random_json(input_txt,random_name, rasforskning_thread)
+    extract_keyword_json(input_txt,keyword_name, thread)           
+    extract_random_json(input_txt,random_name, thread)
     clean_data(keyword_name,keyword_final_name)
     clean_data(random_name,random_final_name)
 
-rasforskning_thread = "science-biologi-rasforskning"
-#prostitution_etik_moral_och_politik_thread = "mobility-bilar-prostitution_etik_moral_och_politik"
-#feminism_thread = "politics-feminism"
-#antisemitism_sionism_och_judiska_maktforhallanden_thread = "rest-arkiverade_forum-antisemitism_sionism_och_judiska_maktforhallanden"
-#jamstalldhet_och_diskriminering_thread = "society-jamstalldhet_och_diskriminering"
-#terrorism_thread = "politics-terrorism"
-#integration_och_invandring_thread = "politics-integration_och_invandring"
-#nationalsocialism_fascism_och_nationalism_thread = "politics-nationalsocialism_fascism_och_nationalism"
+# rasforskning_thread = "science-biologi-rasforskning"
+# prostitution_etik_moral_och_politik_thread = "mobility-bilar-prostitution_etik_moral_och_politik"
+# feminism_thread = "politics-feminism"
+# antisemitism_sionism_och_judiska_maktforhallanden_thread = "rest-arkiverade_forum-antisemitism_sionism_och_judiska_maktforhallanden"
+# jamstalldhet_och_diskriminering_thread = "society-jamstalldhet_och_diskriminering"
+# terrorism_thread = "politics-terrorism"
+# integration_och_invandring_thread = "politics-integration_och_invandring"
+# nationalsocialism_fascism_och_nationalism_thread = "politics-nationalsocialism_fascism_och_nationalism"
+
+# createDataset(
+#     './thread_text_files/nationalsocialism_fascism_och_nationalism.txt',
+#     './keyword_nationalsocialism_fascism_och_nationalism.jsonl',
+#     './new_clean_data/keyword_nationalsocialism_fascism_och_nationalism.jsonl',
+#     './random_nationalsocialism_fascism_och_nationalism.jsonl',
+#     './new_clean_data/random_nationalsocialism_fascism_och_nationalism.jsonl',
+#     nationalsocialism_fascism_och_nationalism_thread
+# )
+
+def reformat_final_data(input_file, output_file):
+    with open(input_file, 'r') as json_file:
+        json_list = list(json_file)
+        with open(output_file, 'w', encoding='utf-8') as f:
+            
+            it = 0
+            for json_str in json_list:
+                result = json.loads(json_str)
+
+                thread = result["thread"]
+                id_nr = result["id"]
+                text_sample = result["text"]
+                starting_index = result["starting_index"]
+                span_length = result["span_length"]
 
 
+                jsonl_line = {"id": it,"thread":thread ,"thread_id":id_nr,"text":text_sample,"starting_index":starting_index,"span_length":span_length}
 
-createDataset(
-    './thread_text_files/rasforskning.txt',
-    './keyword_rasforskning.jsonl',
-    './new_clean_data/keyword_rasforskning_final.jsonl',
-    './random_rasforskning.jsonl',
-    './new_clean_data/random_rasforskning_final.jsonl',
-    rasforskning_thread
-)
+                f.write(json.dumps(jsonl_line,ensure_ascii=False) + "\n")
+
+                it += 1
+
+
+#reformat_final_data("./clean_data/final_dataset.jsonl","./clean_data/reformatted_final_dataset.jsonl")
+
+#clean_data("./keyword_data/flashback_keyword_data.jsonl", "./keyword_data/flashback_keyword_data.jsonl")
+
+#reformat_final_data("./keyword_data/flashback_keyword_data.jsonl","./keyword_data/reformatted_clean_flashback_keyword_data.jsonl")
+
+
+import random
+
+def shuffle_jsonl(input_file,output_file):
+  
+    with open(input_file, 'r') as json_file:
+        json_list = list(json_file)
+        random.shuffle(json_list)
+        with open(output_file, 'w', encoding='utf-8') as f:
+
+            for json_str in json_list:
+                result = json.loads(json_str)
+    
+                f.write(json.dumps(result,ensure_ascii=False) + "\n")
+
+
+shuffle_jsonl("./keyword_data/flashback_keyword_dataset.jsonl","./keyword_data/shuffled_flashback_keyword_dataset.jsonl")
