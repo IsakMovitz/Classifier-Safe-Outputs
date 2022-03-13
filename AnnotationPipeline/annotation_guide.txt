@@ -2,7 +2,7 @@
 ## CURRENT PIPELINE COMMANDS ##
 
 Load for annotation:
-python3 -m prodigy textcat.teach test2_flashback_dataset blank:sv NEW_DATA/shuffled_keyword_flashback_dataset.jsonl --label SEVERE_TOXIC
+python3 -m prodigy textcat.teach test2_flashback_dataset blank:sv NEW_DATA/shuffled_keyword_flashback_dataset.jsonl --label SEVERE_TOXIC --patterns Patterns/pattern_toxic-TOXIC.jsonl
 
 Save dataset into file:
 python3 -m prodigy db-out test_flashback_dataset  > Data/annotated_test_flashback_dataset.jsonl
