@@ -5,5 +5,9 @@ AnnotationPipeline/sexist-model
 AnnotationPipeline/Flashback/*.json
 AnnotationPipeline/Flashback/topics_files
 AnnotationPipeline/Flashback/subtopics_files
-AnnotationPipeline/Flashback/sampled_data/clean_data
-AnnotationPipeline/Flashback/sampled_data/thread_text_files
+AnnotationPipeline/NEW_DATA
+AnnotationPipeline/Flashback/sampled_data
+AnnotationPipeline/Flashback/sampled_20_data
+AnnotationPipeline/Flashback/sampled_15_data
+AnnotationPipeline/Flashback/thread_text_files
+Old
