@@ -1,15 +1,15 @@
 import spacy
 
-nlp = spacy.load("sexist-model/model-best")
+nlp = spacy.load("./flashback_random_keyword-model/model-best")
 
-doc = nlp("Jag gillar att knulla")
+doc = nlp("din jävla hora stick och brinn")
 print(doc.cats)
 
-doc = nlp("massage escort eskort milf")
+doc = nlp("jävlar vad fint väder det är idag!")
 print(doc.cats)
 
-doc = nlp("jag är en snäll katt")
+doc = nlp("alla judar är smuts")
 print(doc.cats)
 
-doc = nlp("jag gillar potatismos")
+doc = nlp("jag tycker inte att det är något fel med att vara en hora")
 print(doc.cats)
