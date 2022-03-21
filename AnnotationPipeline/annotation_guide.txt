@@ -15,6 +15,12 @@ python3 -m prodigy train flashback_20span_keyword-model --textcat-multilabel fla
 python3 -m prodigy train flashback_random_keyword-model --textcat-multilabel flashback_random_keyword_dataset --base-model blank:sv --eval-split 0.2
 
 
+Franscesca annotation: 
+
+python3 -m prodigy textcat.manual test_franscesca_20span_keyword_dataset ./NEW_DATA/Clean_annotated_data/clean_20span_teach_1000_flashback_keyword_dataset.jsonl --label TOXIC
+
+python3 -m prodigy db-out test_franscesca_20span_keyword_dataset > NEW_DATA/Annotated_data/franscesca_test_dataset.jsonl
+
 ###############################
 ## 1: Load data from Huggingface, parse and save in jsonl format ##
 
