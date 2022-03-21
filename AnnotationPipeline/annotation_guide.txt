@@ -2,15 +2,15 @@
 ## CURRENT PIPELINE COMMANDS ##
 
 Load for annotation:
-python3 -m prodigy textcat.teach test2_flashback_dataset blank:sv NEW_DATA/shuffled_keyword_flashback_dataset.jsonl --label SEVERE_TOXIC --patterns Patterns/pattern_toxic-TOXIC.jsonl
+python3 -m prodigy textcat.teach flashback_20span_keyword_dataset blank:sv NEW_DATA/Unlabeled_data/keyword_subset_extending.jsonl --label TOXIC
 
 Save dataset into file:
-python3 -m prodigy db-out test_flashback_dataset  > Data/annotated_test_flashback_dataset.jsonl
+python3 -m prodigy db-out flashback_20span_keyword_dataset  > NEW_DATA/Annotated_data/20span_teach_1000_flashback_keyword_dataset.jsonl
 
 
 Train a model on dataset:
 
-python3 -m prodigy train test_flashback-model --textcat-multilabel test_flashback_dataset --base-model blank:sv --eval-split 0.2
+python3 -m prodigy train flashback_20span_keyword-model --textcat-multilabel flashback_20span_keyword_dataset --base-model blank:sv --eval-split 0.2
 
 python3 -m prodigy train flashback_random_keyword-model --textcat-multilabel flashback_random_keyword_dataset --base-model blank:sv --eval-split 0.2
 

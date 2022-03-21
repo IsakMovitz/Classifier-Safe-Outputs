@@ -1,6 +1,8 @@
 import spacy
 
-nlp = spacy.load("./flashback_random_keyword-model/model-best")
+nlp = spacy.load("./flashback_20span_keyword-model/model-last")
+
+#nlp = spacy.load("./flashback_random_keyword-model/model-last")
 
 doc = nlp("din jävla hora stick och brinn")
 print(doc.cats)

@@ -16,16 +16,19 @@ def clean_annotation(input_filename, output_filename):
             id_list.append(id_nr)
             
             text_sample = line_dict['text']
+            thread = line_dict['thread']
+            thread_id = line_dict['thread_id']
+            keyword =  line_dict['keyword']
             starting_index = line_dict['starting_index']
             span_length = line_dict['span_length']
         
 
             if line_dict['answer'] == 'accept': # 1
-                cleaned_data.append({"id":id_nr,"text":text_sample,"starting_index":starting_index,
-                "span_length":span_length,"sexually_explicit":1})
+                cleaned_data.append({"id":id_nr,"thread":thread,"thread_id":thread_id,"text":text_sample,"starting_index":starting_index,
+                "span_length":span_length,"TOXIC":1})
             else:
-                cleaned_data.append({"id":id_nr,"text":text_sample,"starting_index":starting_index,
-                "span_length":span_length,"sexually_explicit":0})
+                cleaned_data.append({"id":id_nr,"thread":thread,"thread_id":thread_id,"text":text_sample,"starting_index":starting_index,
+                "span_length":span_length,"TOXIC":0})
 
     #Save cleaned back to jsonl format:
     with open(output_filename, 'w', encoding='utf-8') as f:
@@ -36,7 +39,7 @@ def clean_annotation(input_filename, output_filename):
                     f.write(json.dumps(item,ensure_ascii=False))
 
 
-clean_annotation("Data/annotated_sexist_dataset.jsonl","Data/clean_annotated_sexist.jsonl")
+clean_annotation("NEW_DATA/Annotated_data/20span_teach_1000_flashback_keyword_dataset.jsonl","NEW_DATA/Clean_annotated_data/clean_20span_teach_1000_flashback_keyword_dataset.jsonl")
 
 
 
