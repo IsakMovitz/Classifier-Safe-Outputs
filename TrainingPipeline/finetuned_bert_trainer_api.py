@@ -36,27 +36,31 @@ trainer = Trainer(model= finetuned_model, args=training_args, train_dataset=smal
 # Start fine-tuning# 
 trainer.train()
 
+## Save model ##
+trainer.save_model("./Models/")
+tokenizer.save_pretrained("./Models/")
+
 ### Evaluation of the final model, evaluated based on accuracy ###
 
-#metric = load_metric("accuracy")
-metric = load_metric("glue","mrpc")
+# metric = load_metric("accuracy")
+# #metric = load_metric("glue","mrpc")
 
-def compute_metrics(eval_pred):
-    logits, labels = eval_pred
-    predictions = np.argmax(logits, axis=-1)
-    return metric.compute(predictions=predictions, references=labels)
+# def compute_metrics(eval_pred):
+#     logits, labels = eval_pred
+#     predictions = np.argmax(logits, axis=-1)
+#     return metric.compute(predictions=predictions, references=labels)
 
-new_trainer = Trainer(
-    model=finetuned_model,
-    args=training_args,
-    train_dataset=small_train_dataset,
-    eval_dataset=small_eval_dataset,
-    compute_metrics=compute_metrics,
-)
+# new_trainer = Trainer(
+#     model=finetuned_model,
+#     args=training_args,
+#     train_dataset=small_train_dataset,
+#     eval_dataset=small_eval_dataset,
+#     compute_metrics=compute_metrics,
+# )
 
-# Call evaluation # 
-evaluation_dict = trainer.evaluate()
-print(evaluation_dict)
+# # Call evaluation # 
+# evaluation_dict = trainer.evaluate()
+# print(evaluation_dict)
 
 
 # ### Prediction ### 
