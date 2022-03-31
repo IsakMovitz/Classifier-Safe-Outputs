@@ -7,6 +7,7 @@ from torch.utils.data import DataLoader
 from transformers import AdamW
 from transformers import get_scheduler
 from tqdm.auto import tqdm
+from transformers import TextClassificationPipeline
 
 # Source: https://huggingface.co/docs/transformers/training
 # Goal: Classify whether movie reviews in the imdb-dataset are positive or negative.
@@ -75,15 +76,22 @@ for epoch in range(num_epochs):
         optimizer.zero_grad()
         progress_bar.update(1)
 
-# torch.save({
-#             'epoch': epoch,
-#             'model_state_dict': finetuned_model.state_dict(),
-#             'optimizer_state_dict': optimizer.state_dict(),
-#             'loss': loss,
-#             }, "SAVED.pth")
+
+pipe = TextClassificationPipeline(model=finetuned_model, tokenizer=tokenizer, return_all_scores=True)
+answer = pipe("This movie sucks ass")
+print(answer)
 
 
-### Evaluation of the final model, evaluated based on accuracy ###
+
+# # torch.save({
+# #             'epoch': epoch,
+# #             'model_state_dict': finetuned_model.state_dict(),
+# #             'optimizer_state_dict': optimizer.state_dict(),
+# #             'loss': loss,
+# #             }, "SAVED.pth")
+
+
+# ### Evaluation of the final model, evaluated based on accuracy ###
 
 # metric = load_metric("accuracy")
 
@@ -95,6 +103,8 @@ for epoch in range(num_epochs):
 
 #     logits = outputs.logits
 #     predictions = torch.argmax(logits, dim=-1)
+#     # [ 0,1,0, ...] , predicted labels for every batch
+#     print(predictions)
 #     metric.add_batch(predictions=predictions, references=batch["labels"])
 
 # print(metric.compute())
