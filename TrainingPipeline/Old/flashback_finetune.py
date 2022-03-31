@@ -11,6 +11,13 @@ from transformers import AdamW
 from transformers import get_scheduler
 from tqdm.auto import tqdm
 
+### Saving the model to pickle file ###
+# torch.save({
+#             'epoch': epoch,
+#             'model_state_dict': finetuned_model.state_dict(),
+#             'optimizer_state_dict': optimizer.state_dict(),
+#             'loss': loss,
+#             }, "SAVED.pth")
 
 ### Dataset ###
 dataset = load_dataset('json', data_files='./Final_data/RESHUFFLED_FINAL_20SPAN_KEYWORD_DATASET.jsonl')['train']

@@ -11,8 +11,6 @@ from transformers import AdamW
 from transformers import get_scheduler
 from tqdm.auto import tqdm
 
-
-
 # Continue with removing unnecessary columns , you only need text, label like with the imdb dataset
 # Compare with finetuned_bert_pytorch.py and see what is different
 
@@ -24,18 +22,22 @@ dataset = dataset.rename_column("TOXIC", "label")
 # print(type(dataset))
 # print(dataset)
 
-train_testvalid = dataset.train_test_split(test_size=0.1)
+train_testvalid = dataset.train_test_split(test_size=0.2)
 # Split the 10% test + valid in half test, half valid
-test_valid = train_testvalid['test'].train_test_split(test_size=0.1)
-# gather everyone if you want to have a single DatasetDict
 train_test_valid_dataset = DatasetDict({
     'train': train_testvalid['train'],
-    'test': test_valid['test'],
-    'valid': test_valid['train']})
+    'test': train_testvalid['test']
+})
+
+# test_valid = train_testvalid['test'].train_test_split(test_size=0.1)
+# # gather everyone if you want to have a single DatasetDict
+# train_test_valid_dataset = DatasetDict({
+#     'train': train_testvalid['train'],
+#     'test': test_valid['test'],
+#     'valid': test_valid['train']})
 
 full_datasets = train_test_valid_dataset
 
-# print(full_datasets)
 ## Tokenizing based on pretrained model
 
 tokenizer = AutoTokenizer.from_pretrained("bert-base-cased")        # KB/bert-base-swedish-cased, AI-Nordics/bert-large-swedish-cased
@@ -44,19 +46,19 @@ def tokenize_function(examples):
     return tokenizer(examples["text"], padding="max_length", truncation=True)
 
 tokenized_datasets = full_datasets.map(tokenize_function, batched=True)
+tokenized_datasets = tokenized_datasets.remove_columns(["text"])        # Why do we remove this? 
+tokenized_datasets = tokenized_datasets.rename_column("label", "labels")
 tokenized_datasets.set_format("torch")
-
 print(tokenized_datasets)
-### Creating subsets ### 
+
+# ### Creating subsets ### 
 small_train_dataset = tokenized_datasets["train"].shuffle(seed=42).select(range(10)) # 1000
 small_eval_dataset = tokenized_datasets["test"].shuffle(seed=42).select(range(10))   # 1000
-full_train_dataset = tokenized_datasets["train"]
-full_eval_dataset = tokenized_datasets["test"]
-
-#print(small_train_dataset['text'])
+# full_train_dataset = tokenized_datasets["train"]
+# full_eval_dataset = tokenized_datasets["test"]
 
 
-### Training model ###
+# ### Training model ###
 train_dataloader = DataLoader(small_train_dataset, shuffle=True, batch_size=8)
 eval_dataloader = DataLoader(small_eval_dataset, batch_size=8)
 
@@ -84,3 +86,5 @@ for epoch in range(num_epochs):
         lr_scheduler.step()
         optimizer.zero_grad()
         progress_bar.update(1)
+
+
