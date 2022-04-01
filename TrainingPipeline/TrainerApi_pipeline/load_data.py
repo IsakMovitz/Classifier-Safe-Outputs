@@ -31,4 +31,4 @@ small_eval_dataset = tokenized_datasets["test"].shuffle(seed=42).select(range(10
 full_train_dataset = tokenized_datasets["train"]
 full_eval_dataset = tokenized_datasets["test"]
 
-print(small_train_dataset)
+#print(small_train_dataset)

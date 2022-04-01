@@ -1,30 +1,28 @@
 
 from load_data import * 
 from transformers import TrainingArguments, DataCollatorWithPadding
-from transformers import Trainer
+from transformers import Trainer,TrainerCallback
 from transformers import AutoModelForSequenceClassification
 import numpy as np
 from datasets import load_metric
+from copy import deepcopy
 
-### Fine-tune training, using the Trainer API ### 
+# Fine-tune training, using the Trainer API 
 finetuned_model = AutoModelForSequenceClassification.from_pretrained("bert-base-cased", num_labels=2)
 
 data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
 
+# Does an evaluation of evaluation dataset after every epoch with "evaluation_strategy" = "epoch"
 training_args = TrainingArguments(
     output_dir="./results",
-    # evaluation_strategy= "epoch",
+    # evaluation_strategy= "epoch",   # Evaluate after every epoch  
+    # logging_strategy= "epoch",       
     learning_rate=2e-5,
     per_device_train_batch_size=8,
     per_device_eval_batch_size=8,
-    num_train_epochs=1,
+    num_train_epochs=3,
     weight_decay=0.01,
 )
-def compute_metrics(eval_pred):
-        predictions, labels = eval_pred
-        predictions = np.argmax(predictions, axis=1)
-        metric = load_metric('accuracy')
-        return metric.compute(predictions=predictions, references=labels)
 
 trainer = Trainer(
     model= finetuned_model,
@@ -32,28 +30,15 @@ trainer = Trainer(
     train_dataset= small_train_dataset,
     eval_dataset= small_eval_dataset,
     tokenizer=tokenizer,
-    data_collator=data_collator,
-    compute_metrics=compute_metrics,
+    data_collator=data_collator
 )
 
-# Start fine-tuning# 
-trainer.train()
+# Start fine-tuning 
+train_result = trainer.train()
 
-## Save model ##
-# trainer.save_model("./TrainerApiModel/")
-# tokenizer.save_pretrained("./TrainerApiModel/")
-
-metrics = trainer.evaluate()
-trainer.log_metrics("eval", metrics)
-
-predictions, labels, metrics = trainer.predict(small_eval_dataset)
-
-print(predictions)
-# predictions = np.argmax(predictions, axis=1)
-trainer.log_metrics("test", metrics)
-
-
-preds = np.argmax(predictions.predictions, axis=-1)
-
-metric = load_metric('glue', 'mrpc')
-metric.compute(predictions=preds, references=predictions.label_ids)
+# Log and save training metrics
+metrics = train_result.metrics
+trainer.log_metrics("train", metrics)
+trainer.save_metrics("train", metrics)
+trainer.save_model("./TrainerApiModel/")
+tokenizer.save_pretrained("./TrainerApiModel/")
