@@ -11,6 +11,10 @@ from transformers import Trainer,TrainerCallback
 from transformers import AutoModelForSequenceClassification
 import torch
 
+import numpy as np
+from datasets import load_metric
+from transformers import pipeline
+
 class CustomTrainer(Trainer):
     pass
 
@@ -65,19 +69,32 @@ def tokenize_data(full_datasets,tokenizer):
 
     return tokenized_datasets
 
-def finetune_model(model,train_data,test_data,tokenizer, save_filename):
+def load_model_tokenizer_device(pretrained_model):
+    tokenizer = AutoTokenizer.from_pretrained(pretrained_model)
+    model = AutoModelForSequenceClassification.from_pretrained(pretrained_model, num_labels=2)
+    device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+
+    return model,tokenizer,device
+
+
+def finetune_model(model,train_data,test_data,tokenizer, model_filename,results_filename):
     data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
 
     training_args = TrainingArguments(
-        output_dir="./results",
+        output_dir= results_filename,
         # evaluation_strategy= "epoch",   # Evaluate after every epoch  
-        # logging_strategy= "epoch",       
+        logging_strategy= "steps",       
         learning_rate=2e-5,
         per_device_train_batch_size=8,
         per_device_eval_batch_size=8,
         num_train_epochs=1,
         weight_decay=0.01,
+        logging_steps=20,
+        logging_dir='./logs',
+        #report_to="wandb"
+        #evaluation_strategy="steps"
     )
+
 
     trainer = Trainer(
         model= model,
@@ -91,45 +108,106 @@ def finetune_model(model,train_data,test_data,tokenizer, save_filename):
     # Start fine-tuning 
     train_result = trainer.train()
 
-    # Log and save training metrics
-    metrics = train_result.metrics
-    trainer.log_metrics("train", metrics)
-    trainer.save_metrics("train", metrics)
-    trainer.save_model(save_filename)
-    tokenizer.save_pretrained(save_filename)
+    print(trainer.state.log_history)
 
-def load_model_tokenizer_device(pretrained_model):
-    tokenizer = AutoTokenizer.from_pretrained(pretrained_model)
-    model = AutoModelForSequenceClassification.from_pretrained(pretrained_model, num_labels=2)
-    device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+    # # Log and save training metrics
+    # metrics = train_result.metrics
+    # trainer.log_metrics("train", metrics)
+    # trainer.save_metrics("train", metrics)
+    # trainer.save_model(model_filename)
+    # tokenizer.save_pretrained(model_filename)
 
-    return model,tokenizer,device
+def train_model():
 
-def evaluate_model():
-    pass
+    pretrained_model = "bert-base-cased"
+    model, tokenizer, device = load_model_tokenizer_device(pretrained_model)
+    model.to(device)
+
+    full_datasets = load_split_data("./FINETUNE_DATASET.jsonl")
+
+    ### Dataset ###
+    tokenized_datasets = tokenize_data(full_datasets, tokenizer)
+    small_train = tokenized_datasets[0]
+    small_test = tokenized_datasets[1]
+
+    print(small_train)
+    
+    ### Model training ###
+    finetune_model(model,small_train,small_test,tokenizer,"./bert_basecase_test_Model/","./bert_basecase_test_results/")
+    
+def evaluate_model(model_filename,stats_output_dir):
+    ### Load finetuned model from local ###
+    tokenizer = AutoTokenizer.from_pretrained(model_filename)
+    finetuned_model = AutoModelForSequenceClassification.from_pretrained(model_filename)
+
+
+    full_datasets = load_split_data("./FINETUNE_DATASET.jsonl")
+
+    ### Dataset ###
+    tokenized_datasets = tokenize_data(full_datasets, tokenizer)
+    small_test = tokenized_datasets[1]
+
+    ### Evaluate model on test dataset ###
+    def compute_metrics(eval_pred):
+            predictions, labels = eval_pred
+            predictions = np.argmax(predictions, axis=1)
+
+            recall_metric = load_metric('recall')
+            precision_metric = load_metric('precision')
+            accuracy_metric = load_metric('accuracy')
+            f1_metric = load_metric('f1')
+            #glue_metric = load_metric("glue", "mrpc")
+
+            recall = recall_metric.compute(predictions=predictions, references=labels)
+            precision = precision_metric.compute(predictions=predictions, references=labels)
+            accuracy = accuracy_metric.compute(predictions=predictions, references=labels)
+            f1 = f1_metric.compute(predictions=predictions, references=labels)
+
+            return {"recall": recall,"precision": precision, "accuracy":accuracy, "f1": f1}
+
+    training_args = TrainingArguments(
+        output_dir= stats_output_dir
+    )
+
+    test_trainer = Trainer(
+        model= finetuned_model,
+        args=training_args,
+        eval_dataset= small_test,
+        tokenizer=tokenizer,
+        compute_metrics=compute_metrics
+    )
+
+    def log_metrics(metrics):
+
+        for key,value in metrics.items():
+            print(key + " = " + str(value) )
+        
+    metrics = test_trainer.evaluate()
+
+    log_metrics(metrics)
+
+    ### Testing single strings ###
+
+    def evaluate_string(string):
+        classifier = pipeline(task= 'text-classification',       # 'sentiment-analysis'    
+                        model= finetuned_model,
+                        tokenizer = tokenizer)
+        result = classifier(string)
+        label = result[0]['label']
+
+        if label == 'LABEL_0':
+            print("SAFE")
+        elif label == 'LABEL_1':
+            print('TOXIC')
+
+        return result
 
 def main():
-    pass
-    # pretrained_model = "bert-base-cased"
-    # model, tokenizer, device = load_model_tokenizer_device(pretrained_model)
-    # model.to(device)
-
-    # full_datasets = load_split_data("./FINETUNE_DATASET.jsonl")
-
-    # ### Dataset ###
-    # tokenized_datasets = tokenize_data(full_datasets, tokenizer)
-    # small_train = tokenized_datasets[0]
-    # small_test = tokenized_datasets[1]
-
-    # print(small_train)
     
-    # # ### Model training ###
-    # finetune_model(model,small_train,small_test,tokenizer,"./Finetuned_Model/")
+    train_model()
+
+    #evaluate_model("bert_basecase_test_Model","bert_basecase_test_results") # "bert_basecase_test_results"
     
-    ### Model evaluation ###
-
-
-
 
 if __name__ == '__main__':
     main()
