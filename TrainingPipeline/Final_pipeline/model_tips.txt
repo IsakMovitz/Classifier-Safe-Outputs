@@ -13,6 +13,19 @@ Swedish pretrained models to test:
 1.) KB/bert-base-swedish-cased
 2.) AI-Nordics/bert-large-swedish-cased
 
-
 KBLab/bert-base-swedish-cased-new
 
+# Splitting data into train,test,valid
+
+# train_testvalid = dataset.train_test_split(test_size=0.1)
+# # Split the 10% test + valid in half test, half valid
+# test_valid = train_testvalid['test'].train_test_split(test_size=0.1)
+# # gather everyone if you want to have a single DatasetDict
+# train_test_valid_dataset = DatasetDict({
+#     'train': train_testvalid['train'],
+#     'test': test_valid['test'],
+#     'valid': test_valid['train']})
+# full_datasets = train_test_valid_dataset
+
+
+from sklearn.model_selection import train_test_split
