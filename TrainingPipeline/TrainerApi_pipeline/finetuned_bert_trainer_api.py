@@ -16,7 +16,7 @@ raw_datasets = load_dataset("imdb")
 tokenizer = AutoTokenizer.from_pretrained("bert-base-cased")
 
 def tokenize_function(examples):
-    return tokenizer(examples["text"], padding="max_length", truncation=True)
+    return tokenizer(examples["text"], padding="longest", truncation=True)
 
 tokenized_datasets = raw_datasets.map(tokenize_function, batched=True)
 
@@ -34,33 +34,37 @@ training_args = TrainingArguments("test_trainer")
 trainer = Trainer(model= finetuned_model, args=training_args, train_dataset=small_train_dataset, eval_dataset=small_eval_dataset)
 
 # Start fine-tuning# 
-trainer.train()
+#trainer.train()
+
 
 ## Save model ##
-trainer.save_model("./Models/")
-tokenizer.save_pretrained("./Models/")
+# trainer.save_model("./Models/")
+# tokenizer.save_pretrained("./Models/")
 
 ### Evaluation of the final model, evaluated based on accuracy ###
 
-# metric = load_metric("accuracy")
-# #metric = load_metric("glue","mrpc")
+tokenizer = AutoTokenizer.from_pretrained("./Models/")
+finetuned_model = AutoModelForSequenceClassification.from_pretrained("./Models/")
 
-# def compute_metrics(eval_pred):
-#     logits, labels = eval_pred
-#     predictions = np.argmax(logits, axis=-1)
-#     return metric.compute(predictions=predictions, references=labels)
+metric = load_metric("accuracy")
+#metric = load_metric("glue","mrpc")
 
-# new_trainer = Trainer(
-#     model=finetuned_model,
-#     args=training_args,
-#     train_dataset=small_train_dataset,
-#     eval_dataset=small_eval_dataset,
-#     compute_metrics=compute_metrics,
-# )
+def compute_metrics(eval_pred):
+    logits, labels = eval_pred
+    predictions = np.argmax(logits, axis=-1)
+    return metric.compute(predictions=predictions, references=labels)
 
-# # Call evaluation # 
-# evaluation_dict = trainer.evaluate()
-# print(evaluation_dict)
+new_trainer = Trainer(
+    model=finetuned_model,
+    args=training_args,
+    train_dataset=small_train_dataset,
+    eval_dataset=small_eval_dataset,
+    compute_metrics=compute_metrics,
+)
+
+# Call evaluation # 
+evaluation_dict = trainer.evaluate()
+print(evaluation_dict)
 
 
 # ### Prediction ### 

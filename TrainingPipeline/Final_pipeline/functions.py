@@ -37,8 +37,8 @@ def tokenize_data(full_datasets,tokenizer):
     tokenized_datasets = full_datasets.map(tokenize_function, batched=True)
 
     # Creating subsets 
-    small_train_dataset = tokenized_datasets["train"].shuffle(seed=42).select(range(100)) # 1000
-    small_eval_dataset = tokenized_datasets["test"].shuffle(seed=42).select(range(100))   # 1000
+    small_train_dataset = tokenized_datasets["train"].shuffle(seed=42).select(range(10)) # 1000
+    small_eval_dataset = tokenized_datasets["test"].shuffle(seed=42).select(range(10))   # 1000
     full_train_dataset = tokenized_datasets["train"]
     full_eval_dataset = tokenized_datasets["test"]
 
@@ -97,18 +97,16 @@ def train_model(pretrained_model,finetune_dataset,final_model_dir,training_args)
     trainer.save_model(final_model_dir)
     tokenizer.save_pretrained(final_model_dir)
 
-
 def evaluate_model(finetuned_model,tokenizer,test_data,stats_output_dir):
 
     # Evaluate model on test dataset
     def compute_metrics(eval_pred):
-            predictions, labels = eval_pred
-            print(predictions)
+            predictions, labels = eval_pred     # logits
+            print(repr(predictions))
+            print(repr(labels))
+      
             predictions = np.argmax(predictions, axis=1)
-            print(labels)
-            print(predictions)
-
-
+ 
             recall_metric = load_metric('recall')
             precision_metric = load_metric('precision')
             accuracy_metric = load_metric('accuracy')
@@ -140,7 +138,7 @@ def evaluate_model(finetuned_model,tokenizer,test_data,stats_output_dir):
             print(key + " = " + str(value) )
         
     metrics = test_trainer.evaluate()
-
+    test_trainer.save_metrics("eval",metrics)
     log_metrics(metrics)
 
 def evaluate_string(string,finetuned_model,tokenizer):

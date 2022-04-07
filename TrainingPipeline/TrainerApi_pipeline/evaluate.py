@@ -16,8 +16,10 @@ finetuned_model = AutoModelForSequenceClassification.from_pretrained("./TrainerA
 ### Evaluate model on test dataset ###
 def compute_metrics(eval_pred):
         predictions, labels = eval_pred
-        predictions = np.argmax(predictions, axis=1)
 
+        print(predictions)
+        predictions = np.argmax(predictions, axis=1)
+        print(predictions)
         recall_metric = load_metric('recall')
         precision_metric = load_metric('precision')
         accuracy_metric = load_metric('accuracy')

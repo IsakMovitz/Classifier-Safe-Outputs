@@ -1,11 +1,6 @@
 import json  
 # 291 / 1000 , for keyword 20 span
 
-# 
-
-
-
-
 input_filename = '../AnnotationPipeline/NEW_DATA/Clean_annotated_data/clean_20span_teach_1000_flashback_keyword_dataset.jsonl'
 
 with open(input_filename, 'r') as json_file:
@@ -19,7 +14,6 @@ for json_str in json_list:
         it += 1
 
 print(it)
-
 
 ### Counting specific labels ###
 # it = 0
