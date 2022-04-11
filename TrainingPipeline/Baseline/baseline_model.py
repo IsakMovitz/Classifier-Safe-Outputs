@@ -5,6 +5,7 @@ from datasets import load_dataset,DatasetDict
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.linear_model import SGDClassifier
+from sklearn.neural_network import MLPClassifier
 from sklearn.pipeline import Pipeline
 from sklearn import metrics
 
@@ -33,21 +34,28 @@ labels = train_data['label']
 # Pipeline and fitting model
 """ 
 Models: 
-MultinomialNB(),
+NAIVE BAYES
+MultinomialNB(),¨
+
+STOCHASTIC GRADIENT DESCENT
 SGDClassifier(loss='hinge', penalty='l2',
                          alpha=1e-3, random_state=42,
-                         max_iter=5, tol=None))
+                         max_iter=5, tol=None)),
+
+MULTI-LAYER PERCEPTRON CLASSIFIER
+MLPClassifier(solver='lbfgs', hidden_layer_sizes=50,
+                                max_iter=150, shuffle=True, random_state=1,
+                                activation=activation)
 Tokenizers:
 TfidfTransformer(),
 
 """
-
 text_clf = Pipeline([
 ('vect', CountVectorizer()),
 ('tfidf', TfidfTransformer()),     
-('clf', SGDClassifier(loss='hinge', penalty='l2',
-                         alpha=1e-3, random_state=42,
-                         max_iter=5, tol=None))])          
+('clf', MLPClassifier(solver='lbfgs', hidden_layer_sizes=50,
+                                max_iter=150, shuffle=True, random_state=1,
+                                activation='logistic'))])          
 
 text_clf.fit(train_text_data, labels)
 
@@ -59,7 +67,7 @@ predicted = text_clf.predict(test_text_data)
 accuracy = np.mean(predicted == test_labels)
 
 print(accuracy)
-
+print(metrics.classification_report(test_labels, predicted))
 
 #########################################################################
 # from sklearn.dummy import DummyClassifier
