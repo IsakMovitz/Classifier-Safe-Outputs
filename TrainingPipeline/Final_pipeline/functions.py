@@ -9,12 +9,21 @@ from datasets import DatasetDict
 from datasets import load_metric
 import torch
 import numpy as np
+from torch import nn
 
-def load_split_data(jsonl_file):
+class CustomTrainer(Trainer):
+    def compute_loss(self, model, inputs, return_outputs=False):
+        labels = inputs.get("labels")
+        # forward pass
+        outputs = model(**inputs)
+        logits = outputs.get("logits")
+        # compute custom loss (suppose one has 3 labels with different weights)
+        loss_fct = nn.CrossEntropyLoss(weight=torch.tensor([1.0, 2.0, 3.0])) # Can weigh the labels differently?
+        loss = loss_fct(logits.view(-1, self.model.config.num_labels), labels.view(-1))
+        return (loss, outputs) if return_outputs else loss
+
+def load_split_data(jsonl_file,train_test_split):
  
-    # Splitting data into train, test 
-    train_test_split = 0.2
-
     dataset = load_dataset('json', data_files= jsonl_file)['train']
     dataset = dataset.remove_columns(["id","thread_id","thread","keyword","starting_index","span_length"])
     dataset = dataset.rename_column("TOXIC", "label")
@@ -102,9 +111,6 @@ def evaluate_model(finetuned_model,tokenizer,test_data,stats_output_dir):
     # Evaluate model on test dataset
     def compute_metrics(eval_pred):
             predictions, labels = eval_pred     # logits
-            print(repr(predictions))
-            print(repr(labels))
-      
             predictions = np.argmax(predictions, axis=1)
  
             recall_metric = load_metric('recall')

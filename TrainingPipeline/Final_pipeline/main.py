@@ -1,3 +1,4 @@
+from sklearn.model_selection import train_test_split
 from functions import *
 
 def main():
@@ -7,6 +8,8 @@ def main():
     pretrained_model = "KB/bert-base-swedish-cased"                                      # "bert-base-cased", "KB/bert-base-swedish-cased"
     finetune_dataset = "./FINETUNE_DATASET.jsonl"
     final_model_dir = "./KB_test_Model/"
+    train_test_split = 0.2
+
     training_args = TrainingArguments(
         output_dir= "./KB_train_output/",
         overwrite_output_dir=True, 
@@ -26,7 +29,7 @@ def main():
     ### Evaluation of model ###
     finetuned_model = AutoModelForSequenceClassification.from_pretrained("KB_test_Model")
     tokenizer = AutoTokenizer.from_pretrained("KB_test_Model")
-    full_datasets = load_split_data("FINETUNE_DATASET.jsonl")
+    full_datasets = load_split_data("FINETUNE_DATASET.jsonl", train_test_split)
     tokenized_datasets = tokenize_data(full_datasets, tokenizer)
     small_test = tokenized_datasets[1]
 
