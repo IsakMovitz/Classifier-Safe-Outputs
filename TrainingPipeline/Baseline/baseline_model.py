@@ -65,9 +65,11 @@ test_text_data = test_data['text']
 test_labels = test_data['label']
 predicted = text_clf.predict(test_text_data)
 accuracy = np.mean(predicted == test_labels)
+results = metrics.classification_report(test_labels, predicted)
 
-print(accuracy)
-print(metrics.classification_report(test_labels, predicted))
+print("-- Model --")
+print(text_clf['clf'])
+print(results)
 
 #########################################################################
 # from sklearn.dummy import DummyClassifier

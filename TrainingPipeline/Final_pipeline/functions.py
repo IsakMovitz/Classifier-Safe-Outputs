@@ -17,8 +17,8 @@ class CustomTrainer(Trainer):
         # forward pass
         outputs = model(**inputs)
         logits = outputs.get("logits")
-        # compute custom loss (suppose one has 3 labels with different weights)
-        loss_fct = nn.CrossEntropyLoss(weight=torch.tensor([1.0, 2.0, 3.0])) # Can weigh the labels differently?
+        # compute custom loss (suppose one has 2 labels with different weights)
+        loss_fct = nn.CrossEntropyLoss(weight=torch.tensor([1.0, 1.0])) # Can weigh the labels differently?
         loss = loss_fct(logits.view(-1, self.model.config.num_labels), labels.view(-1))
         return (loss, outputs) if return_outputs else loss
 
@@ -70,7 +70,7 @@ def build_trainer(model,train_data,valid_data,training_args, tokenizer):
     
     data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
 
-    trainer = Trainer(
+    trainer = CustomTrainer(          # Trainer
         model= model,
         args=training_args,
         train_dataset= train_data,
@@ -81,20 +81,22 @@ def build_trainer(model,train_data,valid_data,training_args, tokenizer):
 
     return trainer
 
-def train_model(pretrained_model,finetune_dataset,final_model_dir,training_args):
+def train_model(pretrained_model,finetune_dataset,final_model_dir,training_args,train_test_split):
 
     # Model and tokenizer 
     model, tokenizer, device = load_model_tokenizer_device(pretrained_model)
     model.to(device)
 
     # Finetuning dataset
-    full_datasets = load_split_data(finetune_dataset)
+    full_datasets = load_split_data(finetune_dataset,train_test_split)
     tokenized_datasets = tokenize_data(full_datasets, tokenizer)
     small_train = tokenized_datasets[0]
     small_valid = tokenized_datasets[1]
+    full_train_dataset = tokenized_datasets[2]
+    full_test_dataset = tokenized_datasets[3]
 
     # Initializing model 
-    trainer = build_trainer(model,small_train,small_valid,training_args, tokenizer) 
+    trainer = build_trainer(model,full_train_dataset,full_test_dataset,training_args, tokenizer) 
 
     # Finetuning 
     train_results = trainer.train()
