@@ -4,13 +4,13 @@ def main():
 
     # Parameters
     create_seed(42)
-    train_test_split = 0.2
-    pretrained_model = "AI-Nordics/bert-large-swedish-cased" #  "KB/bert-base-swedish-cased"
+    pretrained_model = "KB/bert-base-swedish-cased"  # "KB/bert-base-swedish-cased"
     finetune_dataset = "./FINETUNE_DATASET.jsonl"
-    run_name = "Run4"
-    model_name = "AI_SWE"
-
+    run_name = "Run6"
+    model_name = "KB"
     final_model_dir = "Local/" + run_name + "/" + model_name + "_Model/"
+    train_test_split = 0.3
+    test_valid_split = 0.5
 
     # Training parameters
     training_args = TrainingArguments(
@@ -27,11 +27,22 @@ def main():
         report_to="wandb",
     )
 
-    full_test = train_model(pretrained_model,finetune_dataset,final_model_dir,training_args,train_test_split)
+    # Model and tokenizer
+    model, tokenizer, device = load_model_tokenizer_device(pretrained_model)
+    model.to(device)
 
-    log_args(training_args.output_dir,training_args,pretrained_model,finetune_dataset,train_test_split)
+    # Finetuning dataset
+    full_datasets = load_split_data(finetune_dataset, train_test_split, test_valid_split)
+    tokenized_datasets = tokenize_data(full_datasets, tokenizer)
+    full_train = tokenized_datasets[0]
+    full_valid = tokenized_datasets[1]
+    full_test = tokenized_datasets[2]
 
-    ### Evaluation of model ###
+    # Model training
+    train_model(model,final_model_dir,training_args,full_train,full_valid,tokenizer)
+    log_args(training_args.output_dir,training_args,pretrained_model,finetune_dataset,train_test_split, test_valid_split)
+
+    # Model evaluation
     finetuned_model = AutoModelForSequenceClassification.from_pretrained(final_model_dir)
     tokenizer = AutoTokenizer.from_pretrained(final_model_dir)
 

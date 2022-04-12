@@ -34,11 +34,12 @@ def create_seed(seed):
     torch.cuda.manual_seed(seed)
     np.random.seed(seed)
 
-def log_args(filepath,training_args,pretrained_model,finetune_dataset,train_test_split):
+def log_args(filepath,training_args,pretrained_model,finetune_dataset,train_test_split, test_valid_split):
     with open( filepath +'/parameters.txt', 'w') as f:
         f.writelines("pretrained_model = " + str(pretrained_model) + "\n")
         f.writelines("finetune_dataset = " + str(finetune_dataset) + "\n")
         f.writelines("train_test_split = " + str(train_test_split) + "\n")
+        f.writelines("test_valid_split = " + str(test_valid_split) + "\n")
         f.writelines("--Training arguments--" + "\n")
         f.writelines("loggin strategy = " + str(training_args.logging_strategy)+ "\n")
         f.writelines("logging_steps = " + str(training_args.logging_steps)+ "\n")
@@ -50,33 +51,32 @@ def log_args(filepath,training_args,pretrained_model,finetune_dataset,train_test
         f.writelines("evaluation_strategy = " + str(training_args.evaluation_strategy)+ "\n")
         f.writelines("report_to = " + str(training_args.report_to))
 
-def load_split_data(jsonl_file,train_test_split):
+def load_split_data(jsonl_file,train_test_split, test_valid_split):
 
     # Code for train,test,valid split
-    # dataset = load_dataset('json', data_files='./Final_data/RESHUFFLED_FINAL_20SPAN_KEYWORD_DATASET.jsonl')['train']
-    # # train_test_dataset = dataset.train_test_split(train_size= 0.8, test_size=0.2)
-    # # print(train_test_dataset)
-
-    # train_testvalid = dataset.train_test_split(test_size=0.1)
-    # # Split the 10% test + valid in half test, half valid
-    # test_valid = train_testvalid['test'].train_test_split(test_size=0.1)
-    # # gather everyone if you want to have a single DatasetDict
-    # train_test_valid_dataset = DatasetDict({
-    #     'train': train_testvalid['train'],
-    #     'test': test_valid['test'],
-    #     'valid': test_valid['train']})
-
-    dataset = load_dataset('json', data_files= jsonl_file)['train']
+    dataset = load_dataset('json', data_files=jsonl_file)['train']
     dataset = dataset.remove_columns(["id","thread_id","thread","keyword","starting_index","span_length"])
     dataset = dataset.rename_column("TOXIC", "label")
 
-    train_test = dataset.train_test_split(test_size=train_test_split)
-    train_test_dataset = DatasetDict({
-        'train': train_test['train'],
-        'test': train_test['test']
-    })
+    train_testvalid = dataset.train_test_split(test_size=train_test_split)
+    test_valid = train_testvalid['test'].train_test_split(test_size=test_valid_split)
+    train_test_valid_dataset = DatasetDict({
+        'train': train_testvalid['train'],
+        'test': test_valid['test'],
+        'valid': test_valid['train']})
 
-    full_datasets = train_test_dataset
+    # Split into test train only
+    # dataset = load_dataset('json', data_files= jsonl_file)['train']
+    # dataset = dataset.remove_columns(["id","thread_id","thread","keyword","starting_index","span_length"])
+    # dataset = dataset.rename_column("TOXIC", "label")
+    #
+    # train_test = dataset.train_test_split(test_size=train_test_split)
+    # train_test_dataset = DatasetDict({
+    #     'train': train_test['train'],
+    #     'test': train_test['test']
+    # })
+
+    full_datasets = train_test_valid_dataset
 
     return full_datasets
 
@@ -88,16 +88,18 @@ def tokenize_data(full_datasets,tokenizer):
     tokenized_datasets = full_datasets.map(tokenize_function, batched=True)
 
     # Creating subsets 
-    small_train_dataset = tokenized_datasets["train"].shuffle(seed=42).select(range(10)) # 1000
-    small_eval_dataset = tokenized_datasets["test"].shuffle(seed=42).select(range(10))   # 1000
+    # small_train_dataset = tokenized_datasets["train"].shuffle(seed=42).select(range(10)) # 1000
+    # small_eval_dataset = tokenized_datasets["test"].shuffle(seed=42).select(range(10))   # 1000
     full_train_dataset = tokenized_datasets["train"]
-    full_eval_dataset = tokenized_datasets["test"]
+    full_valid_dataset = tokenized_datasets["valid"]
+    full_test_dataset = tokenized_datasets["test"]
 
     tokenized_datasets = []
-    tokenized_datasets.append(small_train_dataset)
-    tokenized_datasets.append(small_eval_dataset)
+    # tokenized_datasets.append(small_train_dataset)
+    # tokenized_datasets.append(small_eval_dataset)
     tokenized_datasets.append(full_train_dataset)
-    tokenized_datasets.append(full_eval_dataset)
+    tokenized_datasets.append(full_valid_dataset)
+    tokenized_datasets.append(full_test_dataset)
 
     return tokenized_datasets
 
@@ -123,23 +125,10 @@ def build_trainer(model,train_data,valid_data,training_args, tokenizer):
 
     return trainer
 
-def train_model(pretrained_model,finetune_dataset,final_model_dir,training_args,train_test_split):
-
-    # Model and tokenizer
-    model, tokenizer, device = load_model_tokenizer_device(pretrained_model)
-    model.to(device)
-
-    # Finetuning dataset
-    full_datasets = load_split_data(finetune_dataset,train_test_split)
-    tokenized_datasets = tokenize_data(full_datasets, tokenizer)
-    small_train = tokenized_datasets[0]
-    small_test = tokenized_datasets[1]
-    full_train = tokenized_datasets[2]
-    full_test = tokenized_datasets[3]
-
+def train_model(pretrained_model,final_model_dir,training_args,full_train,full_valid,tokenizer):
 
     # Initializing model 
-    trainer = build_trainer(model,full_train,full_test,training_args, tokenizer)
+    trainer = build_trainer(pretrained_model,full_train,full_valid,training_args, tokenizer)
 
     # Finetuning 
     train_results = trainer.train()
@@ -151,7 +140,6 @@ def train_model(pretrained_model,finetune_dataset,final_model_dir,training_args,
     trainer.save_model(final_model_dir)
     tokenizer.save_pretrained(final_model_dir)
 
-    return full_test
 
 def evaluate_model(finetuned_model,tokenizer,test_data,stats_output_dir):
 
