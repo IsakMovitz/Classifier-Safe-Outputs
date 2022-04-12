@@ -4,9 +4,9 @@ def main():
 
     # Parameters
     create_seed(42)
-    pretrained_model = "KB/bert-base-swedish-cased"  # "KB/bert-base-swedish-cased"
-    finetune_dataset = "./FINETUNE_DATASET.jsonl"
-    run_name = "Run6"
+    pretrained_model = "KB/bert-base-swedish-cased"  # "KB/bert-base-swedish-cased" , "AI-Nordics/bert-large-swedish-cased"
+    finetune_dataset = "./MERGED_SHUFFLE_15_20.jsonl"               # ./MERGED_SHUFFLE_15_20.jsonl, ./FINETUNE_DATASET.jsonl
+    run_name = "Run9"
     model_name = "KB"
     final_model_dir = "Local/" + run_name + "/" + model_name + "_Model/"
     train_test_split = 0.3
@@ -19,9 +19,9 @@ def main():
         logging_strategy= "steps",
         logging_steps =1,
         learning_rate=2e-5,
-        per_device_train_batch_size=32,
+        per_device_train_batch_size=64,
         per_device_eval_batch_size=32,
-        num_train_epochs=5,
+        num_train_epochs=3,
         weight_decay=0.01,
         evaluation_strategy= "epoch",
         report_to="wandb",

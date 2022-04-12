@@ -27,7 +27,6 @@ class CustomTrainer(Trainer):
         loss = loss_fct(logits.view(-1, self.model.config.num_labels), labels.view(-1))
         return (loss, outputs) if return_outputs else loss
 
-
 def create_seed(seed):
     random.seed(seed)
     torch.manual_seed(seed)
@@ -83,7 +82,7 @@ def load_split_data(jsonl_file,train_test_split, test_valid_split):
 def tokenize_data(full_datasets,tokenizer):
 
     def tokenize_function(examples):
-        return tokenizer(examples["text"], padding="max_length", truncation=True)
+        return tokenizer(examples["text"], padding="max_length", truncation=True) # max_length=20
 
     tokenized_datasets = full_datasets.map(tokenize_function, batched=True)
 
