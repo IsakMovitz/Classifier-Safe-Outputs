@@ -1,7 +1,6 @@
 from transformers import Trainer
 from transformers import pipeline
 from transformers import AutoTokenizer
-from transformers import AutoModelForSequenceClassification
 from transformers import TrainingArguments, DataCollatorWithPadding
 from transformers import AutoModelForSequenceClassification
 from datasets import load_dataset
@@ -10,6 +9,7 @@ from datasets import load_metric
 import torch
 import numpy as np
 from torch import nn
+import random
 
 class CustomTrainer(Trainer):
     def compute_loss(self, model, inputs, return_outputs=False):
@@ -27,6 +27,28 @@ class CustomTrainer(Trainer):
         loss = loss_fct(logits.view(-1, self.model.config.num_labels), labels.view(-1))
         return (loss, outputs) if return_outputs else loss
 
+
+def create_seed(seed):
+    random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    np.random.seed(seed)
+
+def log_args(filepath,training_args,pretrained_model,finetune_dataset,train_test_split):
+    with open( filepath +'/parameters.txt', 'w') as f:
+        f.writelines("pretrained_model = " + str(pretrained_model) + "\n")
+        f.writelines("finetune_dataset = " + str(finetune_dataset) + "\n")
+        f.writelines("train_test_split = " + str(train_test_split) + "\n")
+        f.writelines("--Training arguments--" + "\n")
+        f.writelines("loggin strategy = " + str(training_args.logging_strategy)+ "\n")
+        f.writelines("logging_steps = " + str(training_args.logging_steps)+ "\n")
+        f.writelines("learning_rate = " + str(training_args.learning_rate)+ "\n")
+        f.writelines("per_device_train_batch_size = " + str(training_args.per_device_train_batch_size)+ "\n")
+        f.writelines("per_device_eval_batch_size = " + str(training_args.per_device_eval_batch_size)+ "\n")
+        f.writelines("num_train_epochs = " + str(training_args.num_train_epochs)+ "\n")
+        f.writelines("weight_decay = " + str(training_args.weight_decay)+ "\n")
+        f.writelines("evaluation_strategy = " + str(training_args.evaluation_strategy)+ "\n")
+        f.writelines("report_to = " + str(training_args.report_to))
 
 def load_split_data(jsonl_file,train_test_split):
 
