@@ -17,13 +17,33 @@ class CustomTrainer(Trainer):
         # forward pass
         outputs = model(**inputs)
         logits = outputs.get("logits")
+
+        self.num_labels = 2
+        loss_fct = nn.CrossEntropyLoss()
+
         # compute custom loss (suppose one has 2 labels with different weights)
-        loss_fct = nn.CrossEntropyLoss(weight=torch.tensor([1.0, 1.0])) # Can weigh the labels differently?
+        #loss_fct = nn.CrossEntropyLoss(weight=torch.tensor([1.0, 1.0])) # Can weigh the labels differently? , This lines gives gpu bug , tensor not set to correct device
+
         loss = loss_fct(logits.view(-1, self.model.config.num_labels), labels.view(-1))
         return (loss, outputs) if return_outputs else loss
 
+
 def load_split_data(jsonl_file,train_test_split):
- 
+
+    # Code for train,test,valid split
+    # dataset = load_dataset('json', data_files='./Final_data/RESHUFFLED_FINAL_20SPAN_KEYWORD_DATASET.jsonl')['train']
+    # # train_test_dataset = dataset.train_test_split(train_size= 0.8, test_size=0.2)
+    # # print(train_test_dataset)
+
+    # train_testvalid = dataset.train_test_split(test_size=0.1)
+    # # Split the 10% test + valid in half test, half valid
+    # test_valid = train_testvalid['test'].train_test_split(test_size=0.1)
+    # # gather everyone if you want to have a single DatasetDict
+    # train_test_valid_dataset = DatasetDict({
+    #     'train': train_testvalid['train'],
+    #     'test': test_valid['test'],
+    #     'valid': test_valid['train']})
+
     dataset = load_dataset('json', data_files= jsonl_file)['train']
     dataset = dataset.remove_columns(["id","thread_id","thread","keyword","starting_index","span_length"])
     dataset = dataset.rename_column("TOXIC", "label")
@@ -70,7 +90,7 @@ def build_trainer(model,train_data,valid_data,training_args, tokenizer):
     
     data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
 
-    trainer = CustomTrainer(          # Trainer
+    trainer = CustomTrainer(          # Trainer, CustomTrainer
         model= model,
         args=training_args,
         train_dataset= train_data,
@@ -83,7 +103,7 @@ def build_trainer(model,train_data,valid_data,training_args, tokenizer):
 
 def train_model(pretrained_model,finetune_dataset,final_model_dir,training_args,train_test_split):
 
-    # Model and tokenizer 
+    # Model and tokenizer
     model, tokenizer, device = load_model_tokenizer_device(pretrained_model)
     model.to(device)
 
@@ -91,12 +111,13 @@ def train_model(pretrained_model,finetune_dataset,final_model_dir,training_args,
     full_datasets = load_split_data(finetune_dataset,train_test_split)
     tokenized_datasets = tokenize_data(full_datasets, tokenizer)
     small_train = tokenized_datasets[0]
-    small_valid = tokenized_datasets[1]
-    full_train_dataset = tokenized_datasets[2]
-    full_test_dataset = tokenized_datasets[3]
+    small_test = tokenized_datasets[1]
+    full_train = tokenized_datasets[2]
+    full_test = tokenized_datasets[3]
+
 
     # Initializing model 
-    trainer = build_trainer(model,full_train_dataset,full_test_dataset,training_args, tokenizer) 
+    trainer = build_trainer(model,full_train,full_test,training_args, tokenizer)
 
     # Finetuning 
     train_results = trainer.train()
@@ -107,6 +128,8 @@ def train_model(pretrained_model,finetune_dataset,final_model_dir,training_args,
     trainer.save_metrics("train", metrics)
     trainer.save_model(final_model_dir)
     tokenizer.save_pretrained(final_model_dir)
+
+    return full_test
 
 def evaluate_model(finetuned_model,tokenizer,test_data,stats_output_dir):
 
