@@ -39,6 +39,7 @@ def log_args(filepath,training_args,pretrained_model,finetune_dataset,train_test
         f.writelines("finetune_dataset = " + str(finetune_dataset) + "\n")
         f.writelines("train_test_split = " + str(train_test_split) + "\n")
         f.writelines("test_valid_split = " + str(test_valid_split) + "\n")
+
         f.writelines("--Training arguments--" + "\n")
         f.writelines("loggin strategy = " + str(training_args.logging_strategy)+ "\n")
         f.writelines("logging_steps = " + str(training_args.logging_steps)+ "\n")
@@ -82,7 +83,7 @@ def load_split_data(jsonl_file,train_test_split, test_valid_split):
 def tokenize_data(full_datasets,tokenizer):
 
     def tokenize_function(examples):
-        return tokenizer(examples["text"], padding="max_length", truncation=True) # max_length=20
+        return tokenizer(examples["text"], padding="max_length", max_length=128,truncation=True) # max_length=20
 
     tokenized_datasets = full_datasets.map(tokenize_function, batched=True)
 

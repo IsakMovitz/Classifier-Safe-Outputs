@@ -3,10 +3,10 @@ from functions import *
 def main():
 
     # Parameters
-    create_seed(42)
-    pretrained_model = "KB/bert-base-swedish-cased"  # "KB/bert-base-swedish-cased" , "AI-Nordics/bert-large-swedish-cased"
-    finetune_dataset = "./MERGED_SHUFFLE_15_20.jsonl"               # ./MERGED_SHUFFLE_15_20.jsonl, ./FINETUNE_DATASET.jsonl
-    run_name = "Run9"
+    create_seed(42)         # 42, 30 , 20
+    pretrained_model = "KB/bert-base-swedish-cased"                 # "KB/bert-base-swedish-cased" , "AI-Nordics/bert-large-swedish-cased"
+    finetune_dataset = "./FINETUNE_DATASET.jsonl"               # ./MERGED_SHUFFLE_15_20.jsonl, ./FINETUNE_DATASET.jsonl
+    run_name = "Run11"
     model_name = "KB"
     final_model_dir = "Local/" + run_name + "/" + model_name + "_Model/"
     train_test_split = 0.3
@@ -19,13 +19,24 @@ def main():
         logging_strategy= "steps",
         logging_steps =1,
         learning_rate=2e-5,
-        per_device_train_batch_size=64,
-        per_device_eval_batch_size=32,
+        per_device_train_batch_size=16,
+        per_device_eval_batch_size=8,
         num_train_epochs=3,
         weight_decay=0.01,
-        evaluation_strategy= "epoch",
+        evaluation_strategy= "steps",
         report_to="wandb",
+        lr_scheduler_type="constant",
+        disable_tqdm=True
     )
+
+    # lr_scheduler_type:
+    # LINEAR="linear"
+    # COSINE = "cosine"
+    # COSINE_WITH_RESTARTS = "cosine_with_restarts"
+    # POLYNOMIAL = "polynomial"
+    # CONSTANT = "constant"
+    # CONSTANT_WITH_WARMUP = "constant_with_warmup"
+    # warmup_steps=50
 
     # Model and tokenizer
     model, tokenizer, device = load_model_tokenizer_device(pretrained_model)
@@ -46,7 +57,7 @@ def main():
     finetuned_model = AutoModelForSequenceClassification.from_pretrained(final_model_dir)
     tokenizer = AutoTokenizer.from_pretrained(final_model_dir)
 
-    evaluate_model(finetuned_model, tokenizer, full_test, "Local/" + run_name + "/" + model_name + "_eval_output")
+    evaluate_model(finetuned_model, tokenizer, full_test, "Local/" + run_name + "/" + model_name + "_eval_output") # full_test
 
     #evaluate_string("En exempel mening med toxisk text",finetuned_model,tokenizer)
 
