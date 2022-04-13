@@ -11,6 +11,9 @@ import numpy as np
 from torch import nn
 import random
 
+from transformers.trainer_callback import PrinterCallback
+
+
 class CustomTrainer(Trainer):
     def compute_loss(self, model, inputs, return_outputs=False):
         labels = inputs.get("labels")
@@ -48,8 +51,9 @@ def log_args(filepath,training_args,pretrained_model,finetune_dataset,train_test
         f.writelines("per_device_eval_batch_size = " + str(training_args.per_device_eval_batch_size)+ "\n")
         f.writelines("num_train_epochs = " + str(training_args.num_train_epochs)+ "\n")
         f.writelines("weight_decay = " + str(training_args.weight_decay)+ "\n")
-        f.writelines("evaluation_strategy = " + str(training_args.evaluation_strategy)+ "\n")
-        f.writelines("report_to = " + str(training_args.report_to))
+        f.writelines("evaluation_strategy = " + str(training_args.evaluation_strategy) + "\n")
+        f.writelines("report_to = " + str(training_args.report_to) + "\n")
+        f.writelines("lr_scheduler_type== " + str(training_args.lr_scheduler_type))
 
 def load_split_data(jsonl_file,train_test_split, test_valid_split):
 
@@ -83,9 +87,10 @@ def load_split_data(jsonl_file,train_test_split, test_valid_split):
 def tokenize_data(full_datasets,tokenizer):
 
     def tokenize_function(examples):
-        return tokenizer(examples["text"], padding="max_length", max_length=128,truncation=True) # max_length=20
+        return tokenizer(examples["text"],padding="max_length", truncation=True)  # max_length=20, padding="max_length", max_length=128,truncation=True
 
     tokenized_datasets = full_datasets.map(tokenize_function, batched=True)
+    tokenized_datasets = tokenized_datasets.remove_columns(['text'])
 
     # Creating subsets 
     # small_train_dataset = tokenized_datasets["train"].shuffle(seed=42).select(range(10)) # 1000
@@ -122,6 +127,7 @@ def build_trainer(model,train_data,valid_data,training_args, tokenizer):
         tokenizer=tokenizer,
         data_collator=data_collator
     )
+    #trainer.remove_callback(PrinterCallback)
 
     return trainer
 
