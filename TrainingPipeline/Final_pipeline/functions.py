@@ -11,22 +11,15 @@ import numpy as np
 from torch import nn
 import random
 
-from transformers.trainer_callback import PrinterCallback
-
-
 class CustomTrainer(Trainer):
+
     def compute_loss(self, model, inputs, return_outputs=False):
         labels = inputs.get("labels")
-        # forward pass
         outputs = model(**inputs)
         logits = outputs.get("logits")
 
         self.num_labels = 2
         loss_fct = nn.CrossEntropyLoss()
-
-        # compute custom loss (suppose one has 2 labels with different weights)
-        #loss_fct = nn.CrossEntropyLoss(weight=torch.tensor([1.0, 1.0])) # Can weigh the labels differently? , This lines gives gpu bug , tensor not set to correct device
-
         loss = loss_fct(logits.view(-1, self.model.config.num_labels), labels.view(-1))
         return (loss, outputs) if return_outputs else loss
 
@@ -69,44 +62,21 @@ def load_split_data(jsonl_file,train_test_split, test_valid_split):
         'test': test_valid['test'],
         'valid': test_valid['train']})
 
-    # Split into test train only
-    # dataset = load_dataset('json', data_files= jsonl_file)['train']
-    # dataset = dataset.remove_columns(["id","thread_id","thread","keyword","starting_index","span_length"])
-    # dataset = dataset.rename_column("TOXIC", "label")
-    #
-    # train_test = dataset.train_test_split(test_size=train_test_split)
-    # train_test_dataset = DatasetDict({
-    #     'train': train_test['train'],
-    #     'test': train_test['test']
-    # })
 
     full_datasets = train_test_valid_dataset
 
     return full_datasets
 
-def tokenize_data(full_datasets,tokenizer):
+def tokenize_data(dataset,tokenizer):
 
     def tokenize_function(examples):
-        return tokenizer(examples["text"],padding="max_length", truncation=True)  # max_length=20, padding="max_length", max_length=128,truncation=True
+        return tokenizer(examples["text"])  # max_length=20, padding="max_length", max_length=128,truncation=True, padding="max_length", max_length = 22,
 
-    tokenized_datasets = full_datasets.map(tokenize_function, batched=True)
-    tokenized_datasets = tokenized_datasets.remove_columns(['text'])
+    tokenized_dataset = dataset.map(tokenize_function, batched=True)
+    tokenized_dataset = tokenized_dataset.remove_columns(['text'])
 
-    # Creating subsets 
-    # small_train_dataset = tokenized_datasets["train"].shuffle(seed=42).select(range(10)) # 1000
-    # small_eval_dataset = tokenized_datasets["test"].shuffle(seed=42).select(range(10))   # 1000
-    full_train_dataset = tokenized_datasets["train"]
-    full_valid_dataset = tokenized_datasets["valid"]
-    full_test_dataset = tokenized_datasets["test"]
 
-    tokenized_datasets = []
-    # tokenized_datasets.append(small_train_dataset)
-    # tokenized_datasets.append(small_eval_dataset)
-    tokenized_datasets.append(full_train_dataset)
-    tokenized_datasets.append(full_valid_dataset)
-    tokenized_datasets.append(full_test_dataset)
-
-    return tokenized_datasets
+    return tokenized_dataset
 
 def load_model_tokenizer_device(pretrained_model):
     tokenizer = AutoTokenizer.from_pretrained(pretrained_model)
@@ -127,7 +97,6 @@ def build_trainer(model,train_data,valid_data,training_args, tokenizer):
         tokenizer=tokenizer,
         data_collator=data_collator
     )
-    #trainer.remove_callback(PrinterCallback)
 
     return trainer
 
@@ -151,21 +120,20 @@ def evaluate_model(finetuned_model,tokenizer,test_data,stats_output_dir):
 
     # Evaluate model on test dataset
     def compute_metrics(eval_pred):
-            predictions, labels = eval_pred     # logits
-            predictions = np.argmax(predictions, axis=1)
- 
-            recall_metric = load_metric('recall')
-            precision_metric = load_metric('precision')
-            accuracy_metric = load_metric('accuracy')
-            f1_metric = load_metric('f1')
-            #glue_metric = load_metric("glue", "mrpc")
+        predictions, labels = eval_pred     # logits
+        predictions = np.argmax(predictions, axis=1)
 
-            recall = recall_metric.compute(predictions=predictions, references=labels)
-            precision = precision_metric.compute(predictions=predictions, references=labels)
-            accuracy = accuracy_metric.compute(predictions=predictions, references=labels)
-            f1 = f1_metric.compute(predictions=predictions, references=labels)
+        recall_metric = load_metric('recall')
+        precision_metric = load_metric('precision')
+        accuracy_metric = load_metric('accuracy')
+        f1_metric = load_metric('f1')
 
-            return {"recall": recall,"precision": precision, "accuracy":accuracy, "f1": f1}
+        recall = recall_metric.compute(predictions=predictions, references=labels)
+        precision = precision_metric.compute(predictions=predictions, references=labels)
+        accuracy = accuracy_metric.compute(predictions=predictions, references=labels)
+        f1 = f1_metric.compute(predictions=predictions, references=labels)
+
+        return {"recall": recall,"precision": precision, "accuracy":accuracy, "f1": f1}
 
     training_args = TrainingArguments(
         output_dir= stats_output_dir
