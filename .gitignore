@@ -20,3 +20,6 @@ TrainingPipeline\Saved_models
 TrainingPipeline\TrainerApi_pipeline\TrainerApiModel
 TrainingPipeline\TrainerApi_pipeline\results
 TrainingPipeline\TrainerApi_pipeline\RESHUFFLED_FINAL_20SPAN_KEYWORD_DATASET.jsonl
+*__pycache__
+*.idea¨
+TrainingPipeline/Final_pipeline/Local

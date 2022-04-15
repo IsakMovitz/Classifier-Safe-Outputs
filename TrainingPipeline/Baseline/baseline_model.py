@@ -25,7 +25,7 @@ def load_split_data(jsonl_file,train_test_split):
 
     return full_datasets
 
-test_train = load_split_data("./FINETUNE_DATASET.jsonl", 0.2)
+test_train = load_split_data("./FINETUNE_DATASET.jsonl", 0.3)
 
 train_data = test_train['train']
 train_text_data = train_data['text']
@@ -70,6 +70,7 @@ results = metrics.classification_report(test_labels, predicted)
 print("-- Model --")
 print(text_clf['clf'])
 print(results)
+
 
 #########################################################################
 # from sklearn.dummy import DummyClassifier

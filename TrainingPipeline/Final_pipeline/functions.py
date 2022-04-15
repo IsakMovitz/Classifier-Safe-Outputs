@@ -55,15 +55,17 @@ def load_split_data(jsonl_file,train_test_split, test_valid_split):
     dataset = dataset.remove_columns(["id","thread_id","thread","keyword","starting_index","span_length"])
     dataset = dataset.rename_column("TOXIC", "label")
 
-    train_testvalid = dataset.train_test_split(test_size=train_test_split)
-    test_valid = train_testvalid['test'].train_test_split(test_size=test_valid_split)
-    train_test_valid_dataset = DatasetDict({
-        'train': train_testvalid['train'],
-        'test': test_valid['test'],
-        'valid': test_valid['train']})
+    # train_testvalid = dataset.train_test_split(test_size=train_test_split)
+    # test_valid = train_testvalid['test'].train_test_split(test_size=test_valid_split)
+    # train_test_valid_dataset = DatasetDict({
+    #     'train': train_testvalid['train'],
+    #     'test': test_valid['test'],
+    #     'valid': test_valid['train']})
 
 
-    full_datasets = train_test_valid_dataset
+    #full_datasets = train_test_valid_dataset
+    full_datasets = dataset
+
 
     return full_datasets
 
