@@ -25,15 +25,30 @@ def load_split_data(jsonl_file,train_test_split):
 
     return full_datasets
 
-test_train = load_split_data("./FINETUNE_DATASET.jsonl", 0.3)
 
-train_data = test_train['train']
-train_text_data = train_data['text']
-labels = train_data['label'] 
+def load_data(jsonl_file):
+
+    # Code for train,test,valid split
+    dataset = load_dataset('json', data_files=jsonl_file)['train']
+
+    dataset = dataset.remove_columns(["id","thread_id","thread","keyword","starting_index","span_length"])
+
+    dataset = dataset.rename_column("TOXIC", "label")
+
+    return dataset
+
+train = load_data("./TRAIN_700.jsonl")
+train_text_data = train['text']
+labels = train['label']
+
+
+test = load_data("./TEST_150.jsonl")
+test_text_data = test['text']
+test_labels = test['label']
 
 # Pipeline and fitting model
-""" 
-Models: 
+"""
+Models:
 NAIVE BAYES
 MultinomialNB(),¨
 
@@ -52,17 +67,13 @@ TfidfTransformer(),
 """
 text_clf = Pipeline([
 ('vect', CountVectorizer()),
-('tfidf', TfidfTransformer()),     
-('clf', MLPClassifier(solver='lbfgs', hidden_layer_sizes=50,
-                                max_iter=150, shuffle=True, random_state=1,
-                                activation='logistic'))])          
+('tfidf', TfidfTransformer()),
+('clf', MultinomialNB())])
 
 text_clf.fit(train_text_data, labels)
 
 # Evaluating model
-test_data = test_train['test']
-test_text_data = test_data['text']
-test_labels = test_data['label']
+
 predicted = text_clf.predict(test_text_data)
 accuracy = np.mean(predicted == test_labels)
 results = metrics.classification_report(test_labels, predicted)
