@@ -156,11 +156,13 @@ def evaluate_string(string,finetuned_model,tokenizer):
         label = result[0]['label']
 
         if label == 'LABEL_0':
-            print("SAFE")
+            #print("SAFE")
+            return 0
         elif label == 'LABEL_1':
-            print('TOXIC')
+            #print('TOXIC')
+            return 1
 
-        return result
+    
 
 
 

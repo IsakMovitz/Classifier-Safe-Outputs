@@ -9,6 +9,7 @@ Swedish pretrained models to test:
 
 1.) KB/bert-base-swedish-cased
 2.) AI-Nordics/bert-large-swedish-cased
+3.) For fun : xlm-roberta-large 
 
 # lr_scheduler_type:
 # LINEAR="linear"

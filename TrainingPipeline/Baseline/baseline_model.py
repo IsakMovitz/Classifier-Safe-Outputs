@@ -6,6 +6,7 @@ from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.linear_model import SGDClassifier
 from sklearn.neural_network import MLPClassifier
+from sklearn.svm import SVC
 from sklearn.pipeline import Pipeline
 from sklearn import metrics
 
@@ -41,7 +42,6 @@ train = load_data("./TRAIN_700.jsonl")
 train_text_data = train['text']
 labels = train['label']
 
-
 test = load_data("./TEST_150.jsonl")
 test_text_data = test['text']
 test_labels = test['label']
@@ -68,7 +68,7 @@ TfidfTransformer(),
 text_clf = Pipeline([
 ('vect', CountVectorizer()),
 ('tfidf', TfidfTransformer()),
-('clf', MultinomialNB())])
+('clf', SVC())])
 
 text_clf.fit(train_text_data, labels)
 
