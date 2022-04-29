@@ -19,7 +19,11 @@ class CustomTrainer(Trainer):
         logits = outputs.get("logits")
 
         self.num_labels = 2
-        loss_fct = nn.CrossEntropyLoss()
+        device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+        #normedWeights = torch.FloatTensor(normedWeights).to(device)
+        weights = weight=torch.tensor([1.0, 1.5]).to(device) # , could maybe work weighing them? 
+        loss_fct = nn.CrossEntropyLoss(weight= weights)
+        #loss_fct = nn.CrossEntropyLoss()
         loss = loss_fct(logits.view(-1, self.model.config.num_labels), labels.view(-1))
         return (loss, outputs) if return_outputs else loss
 
